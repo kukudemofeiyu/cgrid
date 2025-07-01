@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.alarm.mapper.DeviceAlarmMapper">
+
+
+    <select id="findAlarmInfo" resultType="com.things.cgomp.alarm.domain.DeviceAlarmInfo">
+        select *
+        from device_alarm da
+        where
+            deal_status = 0 and
+            da.device_id = #{deviceId}
+         and da.port_id = #{portId}
+         and da.type = #{type}
+         and da.code = #{code}
+    </select>
+
+    <select id="selectAlarmPage" resultType="com.things.cgomp.alarm.domain.DeviceAlarmInfo">
+        select distinct da.id,
+               da.device_id, da.port_id, da.type, da.code, da.reason, da.detail_info,da.alarm_time,da.recovery_time,
+               da.recover_type,da.deal_status,da.deal_by,da.create_time,
+               d.sn
+        from device_alarm da
+        inner join device_info d on da.device_id = d.device_id
+        left join device_site ds on ds.id = d.site_id
+        left join system_org_site os on os.site_id = ds.id
+        left join system_user_site us on us.site_id = ds.id
+        left join system_user_operator uop on uop.operator_id = ds.operator_id
+        where d.status != 2
+         AND d.component = 0
+        <if test="operatorId != null ">
+            AND d.operator_id = #{operatorId}
+        </if>
+        <if test="sn != null and sn != '' ">
+            AND d.sn like concat('%',#{sn},'%')
+        </if>
+        <if test="siteName != null and siteName != '' ">
+            AND ds.name like concat('%',#{siteName},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by create_time desc
+    </select>
+</mapper>

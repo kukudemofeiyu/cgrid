@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.device.mapper.ProductMapper">
+
+    <select id="selectProducts" resultType="com.things.cgomp.device.domain.Product">
+        select
+            p.*,
+            pm.name as factoryName,
+            op.name as operatorName
+        from device_product p
+        inner join device_product_model pm on pm.id = p.factory_id
+        left join system_operator op on op.operator_id = p.operator_id
+        left join system_user_operator uop on uop.operator_id = p.operator_id
+        where 1 = 1
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by p.create_time desc
+    </select>
+</mapper>

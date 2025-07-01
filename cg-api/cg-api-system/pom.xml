@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.things.cgomp</groupId>
+        <artifactId>cg-api</artifactId>
+        <version>1.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>cg-api-system</artifactId>
+
+    <description>
+        cg-api-system系统接口模块
+    </description>
+
+    <dependencies>
+		
+        <!-- CG Common Core-->
+        <dependency>
+            <groupId>com.things.cgomp</groupId>
+            <artifactId>cg-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.things.cgomp</groupId>
+            <artifactId>cg-api-app</artifactId>
+        </dependency>
+        
+    </dependencies>
+
+</project>

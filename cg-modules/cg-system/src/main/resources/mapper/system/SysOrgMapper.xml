@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.SysOrgMapper">
+
+	<resultMap type="com.things.cgomp.system.api.domain.SysOrg" id="SysOrgResult">
+		<id     property="orgId"     column="org_id"     />
+		<result property="parentId"   column="parent_id"   />
+		<result property="ancestors"  column="ancestors"   />
+		<result property="orgName"   column="org_name"   />
+		<result property="orderNum"   column="order_num"   />
+		<result property="leader"     column="leader"      />
+		<result property="phone"      column="phone"       />
+		<result property="email"      column="email"       />
+		<result property="status"     column="status"      />
+		<result property="delFlag"    column="del_flag"    />
+		<result property="parentName" column="parent_name" />
+		<result property="createBy"   column="create_by"   />
+		<result property="createTime" column="create_time" />
+		<result property="updateBy"   column="update_by"   />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<sql id="selectOrgVo">
+        select o.org_id, o.parent_id, o.ancestors, o.org_name, o.order_num, o.leader, o.phone, o.email, o.type, o.status, o.del_flag, o.create_by, o.create_time
+        from system_org o
+    </sql>
+    
+	<select id="selectOrgList" parameterType="SysOrg" resultMap="SysOrgResult">
+        <include refid="selectOrgVo"/>
+        where o.del_flag = '0'
+		<if test="orgId != null and orgId != 0">
+			AND o.org_id = #{orgId}
+		</if>
+        <if test="parentId != null and parentId != 0">
+			AND o.parent_id = #{parentId}
+		</if>
+		<if test="orgName != null and orgName != ''">
+			AND o.org_name like concat('%', #{orgName}, '%')
+		</if>
+		<if test="status != null and status != ''">
+			AND o.status = #{status}
+		</if>
+		<if test="type != null">
+			AND o.`type` = #{type}
+		</if>
+		<!-- 数据范围过滤 -->
+		${params.dataScope}
+		order by o.parent_id, o.order_num, o.org_id
+    </select>
+    
+    <select id="selectOrgListByRoleId" resultType="Long">
+		select d.org_id
+		from system_org d
+            left join system_role_org rd on d.org_id = rd.org_id
+        where rd.role_id = #{roleId}
+            <if test="orgCheckStrictly">
+              and d.org_id not in (select d.parent_id from system_org d inner join system_role_org rd on d.org_id = rd.org_id and rd.role_id = #{roleId})
+            </if>
+		order by d.parent_id, d.order_num
+	</select>
+    
+    <select id="selectOrgById" parameterType="Long" resultMap="SysOrgResult">
+		<include refid="selectOrgVo"/>
+		where org_id = #{orgId}
+	</select>
+    
+    <select id="checkOrgExistUser" parameterType="Long" resultType="int">
+		select count(1) from system_user where org_id = #{orgId} and del_flag = '0'
+	</select>
+	
+	<select id="hasChildByOrgId" parameterType="Long" resultType="int">
+		select count(1) from system_org
+		where del_flag = '0' and parent_id = #{orgId} limit 1
+	</select>
+	
+	<select id="selectChildrenOrgById" parameterType="Long" resultMap="SysOrgResult">
+		select * from system_org where find_in_set(#{orgId}, ancestors)
+	</select>
+	
+	<select id="selectNormalChildrenOrgById" parameterType="Long" resultType="int">
+		select count(*) from system_org where status = 0 and del_flag = '0' and find_in_set(#{orgId}, ancestors)
+	</select>
+	
+	<select id="checkOrgNameUnique" resultMap="SysOrgResult">
+	    <include refid="selectOrgVo"/>
+		where org_name=#{orgName} and parent_id = #{parentId} and del_flag = '0' limit 1
+	</select>
+    
+    <insert id="insertOrg" parameterType="SysOrg" useGeneratedKeys="true" keyProperty="orgId">
+ 		insert into system_org(
+ 			<if test="orgId != null and orgId != 0">org_id,</if>
+ 			<if test="parentId != null and parentId != 0">parent_id,</if>
+ 			<if test="orgName != null and orgName != ''">org_name,</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors,</if>
+ 			<if test="orderNum != null">order_num,</if>
+ 			<if test="leader != null and leader != ''">leader,</if>
+ 			<if test="phone != null and phone != ''">phone,</if>
+ 			<if test="email != null and email != ''">email,</if>
+ 			<if test="type != null">type,</if>
+ 			<if test="status != null">status,</if>
+ 			<if test="createBy != null and createBy != ''">create_by,</if>
+ 			create_time
+ 		)values(
+ 			<if test="orgId != null and orgId != 0">#{orgId},</if>
+ 			<if test="parentId != null and parentId != 0">#{parentId},</if>
+ 			<if test="orgName != null and orgName != ''">#{orgName},</if>
+ 			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+ 			<if test="orderNum != null">#{orderNum},</if>
+ 			<if test="leader != null and leader != ''">#{leader},</if>
+ 			<if test="phone != null and phone != ''">#{phone},</if>
+ 			<if test="email != null and email != ''">#{email},</if>
+ 			<if test="type != null">#{type},</if>
+ 			<if test="status != null">#{status},</if>
+ 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+ 			sysdate()
+ 		)
+	</insert>
+	
+	<update id="updateOrg" parameterType="SysOrg">
+ 		update system_org
+ 		<set>
+ 			<if test="parentId != null and parentId != 0">parent_id = #{parentId},</if>
+ 			<if test="orgName != null and orgName != ''">org_name = #{orgName},</if>
+ 			<if test="ancestors != null and ancestors != ''">ancestors = #{ancestors},</if>
+ 			<if test="orderNum != null">order_num = #{orderNum},</if>
+ 			<if test="leader != null">leader = #{leader},</if>
+ 			<if test="phone != null">phone = #{phone},</if>
+ 			<if test="email != null">email = #{email},</if>
+ 			<if test="status != null and status != ''">status = #{status},</if>
+ 			<if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+ 			update_time = sysdate()
+ 		</set>
+ 		where org_id = #{orgId}
+	</update>
+	
+	<update id="updateOrgChildren" parameterType="java.util.List">
+	    update system_org set ancestors =
+	    <foreach collection="orgs" item="item" index="index"
+	        separator=" " open="case org_id" close="end">
+	        when #{item.orgId} then #{item.ancestors}
+	    </foreach>
+	    where org_id in
+	    <foreach collection="orgs" item="item" index="index"
+	        separator="," open="(" close=")">
+	        #{item.orgId}
+	    </foreach>
+	</update>
+	 
+	<update id="updateOrgStatusNormal" parameterType="Long">
+ 	    update system_org set status = '0' where org_id in
+ 	    <foreach collection="array" item="orgId" open="(" separator="," close=")">
+        	#{orgId}
+        </foreach>
+	</update>
+	
+	<delete id="deleteOrgById" parameterType="Long">
+		update system_org set del_flag = '1' where org_id = #{orgId}
+	</delete>
+
+</mapper> 

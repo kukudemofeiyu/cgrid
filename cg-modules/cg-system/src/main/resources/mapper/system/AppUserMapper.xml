@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.AppUserMapper">
+
+    <select id="selectUserList" resultType="com.things.cgomp.app.api.domain.AppUser">
+        select u.user_id, u.mobile, u.nick_name, u.avatar, u.status, u.create_time,
+        ua.balance,
+        IF(ic.balance is null, 0, ic.balance) card_balance,
+        IF(ic.balance is null, ua.balance, ua.balance + ic.balance) total_balance
+        from app_user u
+        left join system_user_account ua on ua.user_id = u.user_id
+        left join device_ic_card ic on ic.user_id = u.user_id
+        where 1 = 1
+        and ua.type = 2
+        <if test="mobile != null and mobile != ''">
+            AND u.mobile like concat('%', #{mobile}, '%')
+        </if>
+        <if test="nickName != null and nickName != ''">
+            AND u.nick_name like concat('%', #{nickName}, '%')
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND u.mobile like concat('%', #{keyword}, '%')
+            or u.nick_name like concat('%', #{keyword}, '%')
+        </if>
+        order by u.create_time desc
+    </select>
+
+    <select id="selectTrendDateData" resultType="com.things.cgomp.system.api.domain.AppUserTrendDateData">
+        select date_help.date,
+               IFNULL(u.user_count, 0) user_count
+        from (
+                select
+                    date_add(date_sub(#{beginDate}, INTERVAL 1 DAY), INTERVAL (cast(help_topic_id AS signed INTEGER) + 1) DAY) `date`
+                from mysql.help_topic
+                where help_topic_id &lt; DATEDIFF(#{endDate}, date_sub(#{beginDate}, INTERVAL 1 DAY))
+             ) date_help
+        left join (
+                select
+                    DATE(create_time)           as register_date,
+                    count(user_id)              as user_count
+                from app_user
+                where DATE(create_time) BETWEEN #{beginDate} AND #{endDate}
+                group by DATE(create_time)
+                ) u on date_help.date = u.register_date
+        order by date_help.date;
+    </select>
+</mapper>

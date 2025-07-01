@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.node.mapper.BrokerServiceRunInfoDao">
+
+
+    <select id="selectListByServiceId"
+            resultType="com.things.cgomp.common.device.dao.node.domain.BrokerServiceRunInfo">
+        SELECT
+            *
+        FROM
+            device_node_broker_run_info t
+        WHERE t.service_id =  #{service_id}
+    </select>
+
+    <insert id="deleteByServiceId">
+        delete FROM device_node_broker_run_info t
+        WHERE t.service_id =  #{service_id}
+    </insert>
+
+    <select id="findLastActiveServiceIdByBrokerId"
+            resultType="java.lang.String">
+        SELECT
+            service_id
+        FROM
+            device_node_broker_run_info t
+        WHERE t.broker_id =  #{brokerId}
+            and state = 3
+        order by update_time desc
+    </select>
+
+</mapper>

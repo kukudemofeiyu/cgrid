@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.CommissionRuleMapper">
+
+    <insert id="saveOrUpdate" parameterType="com.things.cgomp.order.api.domain.OrderCommissionRule">
+        insert into order_commission_rule(
+            <if test="userId != null and userId != 0">user_id,</if>
+            <if test="operatorId != null">operator_id,</if>
+            <if test="siteId != null and siteId != 0">site_id,</if>
+            <if test="ratio != null">ratio,</if>
+            <if test="level != null">`level`,</if>
+            <if test="type != null">`type`,</if>
+            <if test="status != null">`status`,</if>
+            <if test="createBy != null and createBy != 0">create_by,</if>
+            create_time
+        )values(
+            <if test="userId != null and userId != 0">#{userId},</if>
+            <if test="operatorId != null">#{operatorId},</if>
+            <if test="siteId != null and siteId != 0">#{siteId},</if>
+            <if test="ratio != null">#{ratio},</if>
+            <if test="level != null">#{level},</if>
+            <if test="type != null">#{type},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null and createBy != 0">#{createBy},</if>
+            sysdate()
+            )
+            on duplicate key update
+                                 ratio = values(ratio),
+                                 `type` = values(`type`),
+                                 update_by = values(create_by),
+                                 update_time = sysdate()
+    </insert>
+</mapper>

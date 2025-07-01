@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.device.mapper.StatisticsMapper">
+
+    <!--获取运行状态sql段 运行状态：0-离线 1-在线  !-->
+    <sql id="runStatus">
+        (cs.status = 1 and now() > cs.valid_time) or cs.`status` = 0 or cs.valid_time is null
+    </sql>
+
+    <sql id="portStatus">
+        case
+            when <include refid="runStatus"/> then 0
+            when dps.status is null then 0
+            when dps.status = 2 then if(dps.port_inserted, if(length(dps.vin) > 0, 5, 4), 2)
+            else dps.status
+        end as port_status
+    </sql>
+
+    <select id="selectDevicePortCount" resultType="com.things.cgomp.device.dto.statistics.StatisticsDevicePortData">
+        select
+            IFNULL(r.total_count, 0) as total_count,
+            IFNULL(r.offline_count, 0) as offline_count,
+            IFNULL(r.fault_count, 0) as fault_count,
+            IFNULL(r.free_count, 0) as free_count,
+            IFNULL(r.charging_count, 0) as charging_count,
+            IFNULL(r.inserted_count, 0) as inserted_count,
+            IFNULL(r.occupy_count, 0) as occupy_count
+        from (
+            select
+                count(rs.device_id)               as total_count,
+                sum(if(rs.port_status = 0, 1, 0)) as offline_count,
+                sum(if(rs.port_status = 1, 1, 0)) as fault_count,
+                sum(if(rs.port_status = 2, 1, 0)) as free_count,
+                sum(if(rs.port_status = 3, 1, 0)) as charging_count,
+                sum(if(rs.port_status = 4, 1, 0)) as inserted_count,
+                sum(if(rs.port_status = 5, 1, 0)) as occupy_count
+            from (
+                select distinct
+                    d.device_id,
+                    <include refid="portStatus"/>
+                from device_info d
+                    left join device_connect_status cs on cs.device_id = d.device_id
+                    left join device_port_status dps on dps.port_id = d.device_id
+                    left join device_site ds on ds.id = d.site_id
+                    left join system_org_site os on os.site_id = ds.id
+                    left join system_user_site us on us.site_id = ds.id
+                    left join system_user_operator uop on uop.operator_id = ds.operator_id
+                where d.component = 1 and d.status != 2
+                    <if test="siteId != null">
+                        and d.site_id = #{siteId}
+                    </if>
+                    <!-- 数据范围过滤 -->
+                    ${params.dataScope}
+                ) rs
+             ) r
+    </select>
+</mapper>

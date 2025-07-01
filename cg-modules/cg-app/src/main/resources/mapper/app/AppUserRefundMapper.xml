@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.app.mapper.AppUserRefundMapper">
+
+    <resultMap id="BaseResultMap" type="com.things.cgomp.app.domain.AppUserRefund">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="giftAmount" column="gift_amount" jdbcType="DECIMAL"/>
+            <result property="beforeBalance" column="before_balance" jdbcType="DECIMAL"/>
+            <result property="balance" column="balance" jdbcType="DECIMAL"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="remark" column="remark" jdbcType="VARCHAR"/>
+            <result property="requestTime" column="request_time" jdbcType="TIMESTAMP"/>
+            <result property="handleBy" column="handle_by" jdbcType="BIGINT"/>
+            <result property="handleTime" column="handle_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,amount,
+        gift_amount,before_balance,balance,
+        status,remark,request_time,
+        handle_by,handle_time
+    </sql>
+</mapper>

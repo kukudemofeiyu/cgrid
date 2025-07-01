@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.SiteDiscountActivityMapper">
+
+    <select id="selectActivitiesByTemplateId" resultType="com.things.cgomp.pay.api.domain.SiteDiscountActivity">
+        select
+            sda.*
+        from pay_site_discount_activity sda
+        inner join pay_site_discount_activity_template sdat
+            on sdat.activity_id = sda.id
+        where sda.del_flag = 0
+            and sdat.template_id = #{templateId}
+            group by sda.id
+            order by sda.create_time desc
+    </select>
+
+    <select id="selectActivities" resultType="com.things.cgomp.pay.vo.sitediscount.SiteDiscountActivityVo">
+        select
+            sda.*,
+            op.name operatorName,
+            cu.real_name createByName,
+            uu.real_name updateByName
+        from pay_site_discount_activity sda
+        LEFT JOIN system_operator op ON sda.operator_id = op.operator_id
+        LEFT JOIN system_user cu ON cu.user_id = sda.create_by
+        LEFT JOIN system_user uu ON uu.user_id = sda.update_by
+        LEFT JOIN system_user_operator uop ON uop.operator_id = sda.operator_id
+        where sda.del_flag = 0
+        <if test="status == 0">
+            and sda.start_time &gt; CURRENT_DATE()
+            and sda.status = 1
+        </if>
+        <if test="status == 1">
+            and sda.start_time &lt;= CURRENT_DATE()
+            and sda.end_time &gt;= CURRENT_DATE()
+            and sda.status = 1
+        </if>
+        <if test="status == 2">
+            and sda.end_time &lt; CURRENT_DATE()
+            and sda.status = 1
+        </if>
+        <if test="status == 3">
+            and sda.status = #{status}
+        </if>
+        <if test="startTime != null and startTime !=''">
+            and sda.end_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime !=''">
+            and sda.start_time &lt;= #{endTime}
+        </if>
+        <if test="name != null and name !=''">
+            and sda.name like concat('%',#{name},'%')
+        </if>
+        <if test="operatorName != null and operatorName !=''">
+            and op.name like concat('%',#{operatorName},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by sda.create_time desc
+    </select>
+
+    <select id="selectSiteActivities" resultType="com.things.cgomp.pay.api.domain.SiteDiscountActivity">
+        select
+            sda.*
+        from pay_site_discount_activity sda
+        left join pay_site_discount_activity_site sdas on sdas.activity_id = sda.id
+        where sda.del_flag = 0
+        and sda.operator_id = #{operatorId}
+        and sda.end_time &gt;= #{startTime}
+        and sda.start_time &lt;= #{endTime}
+        <if test="siteDimension != null">
+            and sda.site_dimension = #{siteDimension}
+        </if>
+        <if test="siteIds != null and siteIds.size() > 0">
+            and sdas.site_id in
+            <foreach collection="siteIds" item="siteId" open="(" separator="," close=")">
+                #{siteId}
+            </foreach>
+        </if>
+        group by sda.id
+    </select>
+
+    <select id="selectAvailableActivities" resultType="com.things.cgomp.pay.api.domain.SiteDiscountActivity">
+        select
+            sda.*,
+            sdt.id templateId
+        from pay_site_discount_activity sda
+        left join pay_site_discount_activity_site sdas on sdas.activity_id = sda.id
+        inner join pay_site_discount_activity_template dat on dat.activity_id = sda.id
+        inner join pay_site_discount_template sdt on sdt.id = dat.template_id
+        where sda.del_flag = 0
+        and sda.operator_id = #{operatorId}
+        and sda.end_time &gt;= #{date}
+        and sda.start_time &lt;= #{date}
+        and (sda.site_dimension = 0
+            or (site_dimension = 1 and sdas.site_id = #{siteId})
+        )
+        and sdt.end_time &gt;= #{time}
+        and sdt.start_time &lt;= #{time}
+        group by sda.id,sdt.id
+    </select>
+</mapper>

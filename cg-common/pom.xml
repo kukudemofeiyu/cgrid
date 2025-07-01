@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.things.cgomp</groupId>
+        <artifactId>cg-omp</artifactId>
+        <version>1.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>cg-common-log</module>
+        <module>cg-common-core</module>
+        <module>cg-common-redis</module>
+        <module>cg-common-security</module>
+        <module>cg-common-sensitive</module>
+        <module>cg-common-datascope</module>
+        <module>cg-common-datasource</module>
+        <module>cg-common-mybatisplus</module>
+        <module>cg-common-gwcontext</module>
+        <module>cg-common-device</module>
+        <module>cg-common-mq</module>
+        <module>cg-common-record</module>
+    </modules>
+
+    <artifactId>cg-common</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        cg-common通用模块
+    </description>
+
+</project>

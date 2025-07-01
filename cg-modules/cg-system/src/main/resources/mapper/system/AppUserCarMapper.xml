@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.AppUserCarMapper">
+
+    <select id="selectCarList" resultType="com.things.cgomp.app.api.domain.AppUserCar">
+        select uc.id, uc.user_id, uc.license_plate_number, uc.license_plate_color, uc.bind_status, uc.bind_time, uc.is_default, u.mobile,
+                u.mobile
+        from app_user_car uc
+        left join app_user u on u.user_id = uc.user_id
+        where uc.bind_status = 1
+        <if test="licensePlateNumber != null and licensePlateNumber != ''">
+            AND uc.license_plate_number like concat('%', #{licensePlateNumber}, '%')
+        </if>
+        <if test="licensePlateColor != null">
+            AND uc.license_plate_color = #{licensePlateColor}
+        </if>
+        <if test="mobile != null and mobile != ''">
+            AND u.mobile like concat('%', #{mobile}, '%')
+        </if>
+        order by uc.bind_time desc
+    </select>
+
+    <select id="selectDefaultCar" resultType="com.things.cgomp.app.api.domain.AppUserCar">
+        select
+            *
+        from app_user_car uc
+        where is_default = 1
+          and uc.user_id = #{userId}
+    </select>
+</mapper>

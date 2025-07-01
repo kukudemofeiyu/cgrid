@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.order.mapper.SiteOccupyFeeMapper">
+
+    <select id="selectFee" resultType="com.things.cgomp.order.domain.SiteOccupyFee">
+        select *
+        from order_site_occupy_fee
+        where site_id = #{siteId}
+          and type = #{type}
+    </select>
+
+    <select id="selectFees" resultType="com.things.cgomp.order.domain.SiteOccupyFee">
+        select *
+        from order_site_occupy_fee
+        where site_id = #{siteId}
+    </select>
+
+    <select id="selectEnableFee" resultType="com.things.cgomp.order.domain.SiteOccupyFee">
+        select *
+        from order_site_occupy_fee
+        where site_id = #{siteId}
+          and type = #{type}
+          and status = 1
+    </select>
+</mapper>

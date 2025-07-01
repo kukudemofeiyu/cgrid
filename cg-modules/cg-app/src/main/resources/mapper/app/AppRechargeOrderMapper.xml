@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.app.mapper.AppRechargeOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.things.cgomp.app.api.domain.AppRechargeOrder">
+            <id property="id" column="id" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="type" column="type" jdbcType="INTEGER"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="payAmount" column="pay_amount" jdbcType="DECIMAL"/>
+            <result property="discountAmount" column="discount_amount" jdbcType="DECIMAL"/>
+            <result property="thirdPartyOrderId" column="third_party_order_id" jdbcType="VARCHAR"/>
+            <result property="appid" column="appid" jdbcType="VARCHAR"/>
+            <result property="mchid" column="mchid" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
+    <update id="updateStatus">
+        update app_recharge_order
+        set status = #{status},
+            pay_time = #{payTime}
+        where id = #{id}
+    </update>
+    <select id="selectOrderByOrderNo" resultType="com.things.cgomp.app.api.domain.AppRechargeOrder">
+        select *
+        from app_recharge_order
+        where third_party_order_id = #{orderNo}
+    </select>
+
+    <select id="selectTrendData" resultType="com.things.cgomp.app.api.domain.AppRechargeTrendData">
+        select
+            date_help.date,
+            IFNULL(rs.count, 0)  as recharge_count,
+            IFNULL(rs.amount, 0) as recharge_amount
+        from (
+                 select
+                     date_add(date_sub(#{beginDate}, INTERVAL 1 DAY), INTERVAL (cast(help_topic_id AS signed INTEGER) + 1) DAY) `date`
+                 from mysql.help_topic
+                 where help_topic_id &lt; DATEDIFF(#{endDate}, date_sub(#{beginDate}, INTERVAL 1 DAY))
+             ) date_help
+        left join (
+                select
+                    DATE(o.pay_time) as pay_date,
+                    count(o.id)      as count,
+                    sum(o.amount)    as amount
+                <!-- 暂时不考虑多运营商权限问题，后续有需要再加上 -->
+                from app_recharge_order o
+                where
+                    o.status = 1
+                    and DATE(o.pay_time) BETWEEN #{beginDate} AND #{endDate}
+                group by DATE(o.pay_time)
+        ) rs on date_help.date = rs.pay_date
+        order by date_help.date;
+    </select>
+</mapper>

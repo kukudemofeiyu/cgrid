@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.node.mapper.ServiceInfoDao">
+
+    <select id="findServiceInfoByServiceId"
+            resultType="com.things.cgomp.common.device.dao.node.domain.ServiceInfo">
+        SELECT
+            *
+        FROM
+            device_node_info t
+        WHERE
+            t.service_id = #{serviceId}
+    </select>
+
+    <insert id="save">
+        INSERT INTO `device_node_info`(
+            `service_id`,
+            `service_name`,
+            `visit_port`,
+            `visit_ip`,
+            `topic`,
+            `context_path`,
+            `update_time`
+        ) VALUES (
+            #{serviceId},
+            #{serviceName},
+            #{visitPort},
+            #{visitIp},
+            #{topic},
+            #{contextPath},
+            #{updateTime}
+        )
+    </insert>
+
+    <update id="update">
+        update device_node_info
+        <set>
+            service_name = #{serviceName},
+            visit_port = #{visitPort},
+            `visit_ip` = #{visitIp},
+            `topic` = #{topic},
+            `context_path` = #{contextPath},
+            `update_time` = #{updateTime}
+        </set>
+        where service_id = #{serviceId}
+    </update>
+
+</mapper>

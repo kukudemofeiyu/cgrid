@@ -1,0 +1,2 @@
+com.things.cgomp.common.log.service.AsyncLogService
+com.things.cgomp.common.log.aspect.LogAspect

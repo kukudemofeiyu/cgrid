@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.order.mapper.OrderCommissionRuleMapper">
+
+    <insert id="saveOrUpdate" parameterType="com.things.cgomp.order.api.domain.OrderCommissionRule">
+        insert into order_commission_rule(
+        <if test="userId != null and userId != 0">user_id,</if>
+        <if test="siteId != null and siteId != 0">site_id,</if>
+        <if test="operatorId != null">operator_id,</if>
+        <if test="ratio != null">ratio,</if>
+        <if test="level != null">`level`,</if>
+        <if test="type != null">`type`,</if>
+        <if test="status != null">`status`,</if>
+        <if test="createBy != null and createBy != 0">create_by,</if>
+        create_time
+        )values(
+        <if test="userId != null and userId != 0">#{userId},</if>
+        <if test="siteId != null and siteId != 0">#{siteId},</if>
+        <if test="operatorId != null">#{operatorId},</if>
+        <if test="ratio != null">#{ratio},</if>
+        <if test="level != null">#{level},</if>
+        <if test="type != null">#{type},</if>
+        <if test="status != null">#{status},</if>
+        <if test="createBy != null and createBy != 0">#{createBy},</if>
+        sysdate()
+        )
+        on duplicate key update
+            <if test="type != null">
+                `type` = values(`type`),
+            </if>
+            ratio = values(ratio),
+            update_by = values(create_by),
+            update_time = sysdate()
+    </insert>
+
+    <sql id="querySql">
+        select r.id, r.user_id, r.operator_id, r.site_id, r.ratio, r.`level`, r.`type`, r.status, 100-r.ratio as left_ratio,
+               u.real_name, op.name as operator_name, au.mobile as operator_mobile, ds.name as site_name
+        from system_operator op
+            left join device_site ds ON ds.operator_id = op.operator_id
+            left join system_user au on au.user_id = op.user_id
+            left join system_org o on o.org_id = au.org_id
+            left join order_commission_rule r on r.operator_id = op.operator_id and r.del_flag = 0
+                <if test="userId != null">
+                    and r.user_id = #{userId}
+                </if>
+                <if test="level != null">
+                    and r.`level` = #{level}
+                </if>
+                <if test="status != null">
+                    and r.status = #{status}
+                </if>
+                <if test="siteId != null">
+                    and r.site_id = #{siteId}
+                </if>
+            left join system_user u on u.user_id = r.user_id
+    </sql>
+
+    <select id="selectRuleById" resultType="com.things.cgomp.order.api.domain.OrderCommissionRule">
+        select r.id, r.user_id, r.operator_id, r.site_id, r.ratio, r.`level`, r.`type`, r.status, 100-r.ratio as left_ratio,
+        u.real_name, op.name as operator_name, au.mobile as operator_mobile, ds.name as site_name
+        from system_operator op
+        left join device_site ds ON ds.operator_id = op.operator_id
+        left join system_user au on au.user_id = op.user_id
+        left join order_commission_rule r on r.operator_id = op.operator_id
+        left join system_user u on u.user_id = r.user_id
+        where r.id = #{ruleId}
+    </select>
+
+    <select id="selectRuleList" resultType="com.things.cgomp.order.api.domain.OrderCommissionRule">
+        <include refid="querySql"/>
+        where op.operator_id = #{operatorId}
+        <if test="siteId != null">
+            and ds.id = #{siteId}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by r.create_time desc
+    </select>
+</mapper>

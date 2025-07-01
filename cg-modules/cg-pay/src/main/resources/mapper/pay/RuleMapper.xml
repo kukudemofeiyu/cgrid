@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.RuleMapper">
+
+    <update id="updateRule">
+        UPDATE pay_rule
+        <set>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="name != null">name = #{name},</if>
+        </set>
+        WHERE del_flag = 0
+           and id = #{id}
+    </update>
+
+    <update id="deleteRule">
+        UPDATE pay_rule
+        set del_flag = 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="selectRules" resultType="com.things.cgomp.pay.vo.RuleVo">
+        select
+            r.*,
+            op.name operatorName,
+            cu.real_name createByName
+        from pay_rule r
+            LEFT JOIN system_operator op ON r.operator_id = op.operator_id
+            LEFT JOIN system_user cu ON cu.user_id = op.user_id
+            LEFT JOIN system_user_operator uop ON uop.operator_id = r.operator_id
+        where r.del_flag = 0
+        <if test="operatorId != null">
+            and r.operator_id = #{operatorId}
+        </if>
+        <if test="name != null and name !=''">
+            and r.name like concat('%',#{name},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by r.create_time desc
+    </select>
+
+    <select id="selectNormalModelIds" resultType="java.lang.Integer">
+        select
+            model_Id
+        from pay_rule
+        where operator_id = #{operatorId}
+    </select>
+
+    <select id="selectDeletedMaxModelId" resultType="java.lang.Integer">
+        select
+            max(model_Id)
+        from pay_rule
+        where del_flag = 1
+          and operator_id = #{operatorId}
+    </select>
+
+    <select id="selectOperatorDefaultRule" resultType="com.things.cgomp.pay.domain.Rule">
+        select
+            *
+        from pay_rule
+        where del_flag = 0
+          and operator_default = 1
+          and operator_id = #{operatorId}
+            limit 1
+    </select>
+
+    <select id="selectSysDefaultRule" resultType="com.things.cgomp.pay.domain.Rule">
+        select
+            *
+        from pay_rule
+        where del_flag = 0
+          and sys_default = 1
+          limit 1
+    </select>
+
+    <sql id="RuleDataScopeSql">
+        select
+            r.*
+        from pay_rule r
+                 left join system_operator op on op.operator_id = r.operator_id
+                 left join system_user u on u.user_id = op.user_id
+                 left join system_user_operator uop ON uop.operator_id = r.operator_id
+    </sql>
+
+    <select id="selectSimpleRules" resultType="com.things.cgomp.pay.vo.rule.SimpleRuleVo">
+        <include refid="RuleDataScopeSql"/>
+        where r.del_flag = 0
+        ${params.dataScope}
+        order by r.create_time desc
+    </select>
+
+    <select id="selectSimpleRulesByPile" resultType="com.things.cgomp.pay.vo.rule.SimpleRuleVo">
+        <include refid="RuleDataScopeSql"/>
+        left join device_info d on d.operator_id = r.operator_id
+        where r.del_flag = 0
+        and d.device_id = #{deviceId}
+        ${params.dataScope}
+        order by r.create_time desc
+    </select>
+
+    <select id="selectRule" resultType="com.things.cgomp.pay.domain.Rule">
+        select
+            *
+        from pay_rule
+        where del_flag = 0
+            and id = #{id}
+            limit 1
+    </select>
+
+    <select id="selectModelRule" resultType="com.things.cgomp.pay.domain.Rule">
+        select
+            *
+        from pay_rule
+        where id = #{id}
+            and model_id = #{modelId}
+    </select>
+</mapper>

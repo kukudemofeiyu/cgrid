@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.td.mapper.DeviceChargeDataMapper">
+
+    <insert id="insertChargeDataBatch">
+        insert into
+        <foreach collection="deviceChargeData" item="item" index="index" separator=" ">
+            `dc-#{item.deviceId}`
+            using device_charging_data (device_id) tags(#{item.deviceId})
+            (
+                `_ts`,
+                `order_sn`
+                `bms_demand_voltage`,
+                `bms_demand_current`,
+                `bms_charge_mode`,
+                `bms_check_voltage`,
+                `bms_check_current`,
+                `bms_max_cell_voltage`,
+                `bms_max_cell_voltage_group_no`,
+                `bms_soc`,
+                `bms_left_charge_time`,
+                `bms_pile_output_voltage`,
+                `bms_pile_output_current`,
+                `bms_total_charge_time`
+            )
+            values
+            (
+                #{item.ts},
+                #{item.orderSn},
+                #{item.bmsDemandVoltage},
+                #{item.bmsDemandCurrent},
+                #{item.bmsChargeMode},
+                #{item.bmsCheckVoltage},
+                #{item.bmsCheckCurrent},
+                #{item.bmsMaxCellVoltage},
+                #{item.bmsMaxCellVoltageGroupNo},
+                #{item.bmsSoc},
+                #{item.bmsLeftChargeTime},
+                #{item.bmsPileOutputVoltage},
+                #{item.bmsPileOutputCurrent},
+                #{item.bmsTotalChargeTime}
+            )
+        </foreach>
+    </insert>
+</mapper>

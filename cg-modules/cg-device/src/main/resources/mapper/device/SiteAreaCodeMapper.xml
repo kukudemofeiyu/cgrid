@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.device.mapper.SiteAreaCodeMapper">
+
+    <select id="getAreaCodes" resultType="com.things.cgomp.device.vo.AreaTreeNode">
+        select
+            id,
+            area_code,
+            `name` label,
+            parent_id,
+            level,
+            longitude,
+            latitude
+        from device_site_area_code
+        where `level` in(-1,0,1,2)
+          and show_flag = 1
+        order by create_time
+    </select>
+</mapper>

@@ -1,0 +1,3 @@
+com.things.cgomp.device.api.factory.RemoteSiteFallbackFactory
+com.things.cgomp.device.api.factory.RemoteDeviceFallbackFactory
+com.things.cgomp.device.api.factory.RemoteDeviceCommandFallbackFactory

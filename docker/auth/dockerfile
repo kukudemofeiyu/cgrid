@@ -1,0 +1,18 @@
+# 基础镜像
+FROM  openjdk:8u342-jdk
+
+# 创建目录
+RUN mkdir -p /home/cg
+# 指定路径
+WORKDIR /home/cg
+# 复制jar文件到路径
+COPY cg-auth.jar /home/cg/auth.jar
+# 启动网关服务
+ENTRYPOINT [\
+    "java",\
+    "-Xms256m", \
+    "-Xmx256m", \
+    "-Xmn128m", \
+    "-jar",\
+    "auth.jar"\
+    ]

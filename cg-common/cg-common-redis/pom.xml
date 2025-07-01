@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.things.cgomp</groupId>
+        <artifactId>cg-common</artifactId>
+        <version>1.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    
+    <artifactId>cg-common-redis</artifactId>
+	
+    <description>
+        cg-common-redis缓存服务
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+        </dependency>
+
+        <!-- CG Common Core-->
+        <dependency>
+            <groupId>com.things.cgomp</groupId>
+            <artifactId>cg-common-core</artifactId>
+        </dependency>
+        
+    </dependencies>
+</project>

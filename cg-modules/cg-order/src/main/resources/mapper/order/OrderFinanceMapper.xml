@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.order.mapper.OrderFinanceMapper">
+
+    <sql id="dataScopeOrder">
+        select distinct
+            ord.*, op.operator_id, op.name operator_name, s.name site_name, d.sn pile_sn
+        from order_info ord
+            left join device_site s on s.id = ord.site_id
+            left join device_info d on d.site_id = s.id and d.device_id = ord.pile_id
+            left join system_user_site us on us.site_id = s.id
+            left join system_operator op on op.operator_id = s.operator_id
+            left join system_user_operator uop on uop.operator_id = s.operator_id
+        where
+            ord.order_type = 0 and ord.pay_status = 1 and ord.pay_time is not null
+    </sql>
+    
+    <sql id="salesColumn">
+        SUM(IF(date(rs.pay_time) = curdate(), rs.order_amount, 0))         as day_sales,
+        SUM(IF(month(rs.pay_time) = month(curdate()), rs.order_amount, 0)) as month_sales,
+        SUM(IF(year(rs.pay_time) = year(curdate()), rs.order_amount, 0))   as year_sales
+    </sql>
+
+    <select id="selectTotalData" resultType="com.things.cgomp.order.api.domain.OrderFinanceData">
+        select
+            IFNULL(r.day_sales, 0)  as day_sales,
+            IFNULL(r.month_sales, 0) as month_sales,
+            IFNULL(r.year_sales, 0)  as year_sales
+        from (
+                select
+                    <include refid="salesColumn"/>
+                from (
+                    <include refid="dataScopeOrder"/>
+                    <!-- 数据范围过滤 -->
+                    ${params.dataScope}
+                    ) as rs
+             ) as r
+    </select>
+
+    <select id="selectListByOperator" resultType="com.things.cgomp.order.api.domain.OrderFinanceData">
+        select
+            rs.operator_id,
+            rs.operator_name,
+            rs.mobile,
+            <include refid="salesColumn"/>
+        from (
+            select distinct
+                op.operator_id, op.name operator_name, u.mobile, ord.id order_id, ord.order_amount, ord.pay_time
+            from system_operator op
+                left join system_user u on u.user_id = op.user_id
+                left join device_site s on s.operator_id = op.operator_id
+                left join order_info ord on ord.site_id = s.id and ord.order_type = 0 and ord.pay_status = 1 and ord.pay_time is not null
+                left join system_user_site us on us.site_id = s.id
+                left join system_user_operator uop on uop.operator_id = op.operator_id
+            where
+                op.del_flag = 0
+                <if test="keyword != null and keyword != ''">
+                    and (
+                        op.name like concat('%', #{keyword}, '%')
+                        or u.mobile like concat('%', #{keyword}, '%')
+                    )
+                </if>
+                <!-- 数据范围过滤 -->
+                ${params.dataScope}
+        ) as rs
+        group by rs.operator_id, rs.operator_name, rs.mobile
+    </select>
+
+    <select id="selectListBySite" resultType="com.things.cgomp.order.api.domain.OrderFinanceData">
+        select
+            rs.site_id,
+            rs.site_name,
+            rs.operator_id,
+            rs.operator_name,
+            rs.mobile,
+            <include refid="salesColumn"/>
+        from (
+            select distinct
+                s.id site_id, s.name site_name, op.operator_id, op.name operator_name, u.mobile, ord.id order_id, ord.order_amount, ord.pay_time
+            from device_site s
+                left join system_operator op on op.operator_id = s.operator_id
+                left join system_user u on u.user_id = op.user_id
+                left join order_info ord on ord.site_id = s.id and ord.order_type = 0 and ord.pay_status = 1 and ord.pay_time is not null
+                left join system_user_site us on us.site_id = s.id
+                left join system_user_operator uop on uop.operator_id = op.operator_id
+            where
+                s.del_flag = 0
+                <if test="keyword != null and keyword != ''">
+                    and (
+                        op.name like concat('%', #{keyword}, '%')
+                        or u.mobile like concat('%', #{keyword}, '%')
+                        or s.name like concat('%', #{keyword}, '%')
+                    )
+                </if>
+                <!-- 数据范围过滤 -->
+                ${params.dataScope}
+        ) as rs
+        group by rs.site_id, rs.site_name, rs.operator_name, rs.mobile
+    </select>
+
+    <select id="selectListByPile" resultType="com.things.cgomp.order.api.domain.OrderFinanceData">
+        select
+            rs.pile_id,
+            rs.pile_sn,
+            rs.site_id,
+            rs.site_name,
+            rs.operator_id,
+            rs.operator_name,
+            rs.mobile,
+            <include refid="salesColumn"/>
+        from (
+            select distinct
+                d.device_id pile_id, d.sn pile_sn, s.id site_id, s.name site_name, op.operator_id, op.name operator_name, u.mobile, ord.id order_id, ord.order_amount, ord.pay_time
+            from device_info d
+                left join device_site s on s.id = d.site_id
+                left join system_operator op on op.operator_id = s.operator_id
+                left join system_user u on u.user_id = op.user_id
+                left join order_info ord on ord.site_id = s.id and ord.pile_id = d.device_id and ord.order_type = 0 and ord.pay_status = 1 and ord.pay_time is not null
+                left join system_user_site us on us.site_id = s.id
+                left join system_user_operator uop on uop.operator_id = op.operator_id
+            where
+                d.status != 2 and d.component = 0
+                <if test="keyword != null and keyword != ''">
+                    and (
+                        op.name like concat('%', #{keyword}, '%')
+                        or u.mobile like concat('%', #{keyword}, '%')
+                        or s.name like concat('%', #{keyword}, '%')
+                        or d.sn like concat('%', #{keyword}, '%')
+                    )
+                </if>
+                <!-- 数据范围过滤 -->
+                ${params.dataScope}
+        ) as rs
+        group by rs.pile_id, rs.pile_sn, rs.site_name, rs.operator_name, rs.mobile
+    </select>
+
+
+</mapper>

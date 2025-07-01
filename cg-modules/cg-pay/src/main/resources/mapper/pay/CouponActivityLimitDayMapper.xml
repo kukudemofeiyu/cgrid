@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.CouponActivityLimitDayMapper">
+
+    <select id="selectLimit" resultType="com.things.cgomp.pay.domain.CouponActivityLimitDay">
+        select
+            *
+        from pay_coupon_activity_limit_day
+        where user_id = #{userId}
+        and activity_id = #{activityId}
+        and `date` = #{date}
+    </select>
+</mapper>

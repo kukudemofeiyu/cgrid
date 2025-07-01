@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.app.mapper.AppThirdPayOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.things.cgomp.app.domain.AppThirdPayOrder">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="TINYINT"/>
+            <result property="orderSource" column="order_source" jdbcType="INTEGER"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="thirdPartyOrderId" column="third_party_order_id" jdbcType="VARCHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+            <result property="chargeOrderSn" column="charge_order_sn" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <update id="updateStatus">
+        update app_third_pay_order
+        set status = #{status},
+            pay_time = #{payTime}
+        where id = #{id}
+    </update>
+    <select id="selectOrderByOrderNo" resultType="com.things.cgomp.app.domain.AppThirdPayOrder">
+        select *
+        from app_third_pay_order
+        where third_party_order_id = #{orderNo}
+    </select>
+</mapper>

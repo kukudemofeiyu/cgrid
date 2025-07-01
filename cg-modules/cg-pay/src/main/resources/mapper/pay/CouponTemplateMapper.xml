@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.CouponTemplateMapper">
+
+    <select id="selectTemplates" resultType="com.things.cgomp.pay.vo.coupon.CouponTemplateVo">
+        select
+            ct.*,
+            cu.real_name createByName,
+            uu.real_name updateByName
+        from pay_coupon_template ct
+        LEFT JOIN system_operator op ON ct.operator_id = op.operator_id
+        LEFT JOIN system_user cu ON cu.user_id = ct.create_by
+        LEFT JOIN system_user uu ON uu.user_id = ct.update_by
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ct.operator_id
+        where 1 = 1
+        <if test="id != null">
+            and ct.id = #{id}
+        </if>
+        <if test="couponType != null">
+            and ct.coupon_type = #{couponType}
+        </if>
+        <if test="deductionType != null">
+            and ct.deduction_type = #{deductionType}
+        </if>
+        <if test="name != null and name !=''">
+            and ct.name like concat('%',#{name},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by ct.create_time desc
+    </select>
+
+    <select id="selectPullDownTemplates" resultType="com.things.cgomp.pay.vo.coupon.CouponTemplateListVo">
+        select
+            ct.*
+        from pay_coupon_template ct
+        LEFT JOIN system_operator op ON ct.operator_id = op.operator_id
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ct.operator_id
+        where 1 = 1
+        <if test="status != null">
+            and ct.status = #{status}
+        </if>
+        <if test="startTime != null">
+            and (
+                ct.use_time_type = 0
+                or (ct.use_time_type = 1 and end_time &gt;= #{startTime})
+            )
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by ct.create_time desc
+    </select>
+</mapper>

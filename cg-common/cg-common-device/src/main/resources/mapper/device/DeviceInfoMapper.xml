@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.device.mapper.DeviceInfoMapper">
+
+
+    <select id="findDeviceInfo" resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select *
+        from device_info t1
+        <where>
+            1 = 1 and t1.status = 1
+            <if test="sn != null and sn != ''">
+                and t1.sn = #{sn}
+            </if>
+            <if test="aliasSn != null and aliasSn != ''">
+                and t1.alias_sn = #{aliasSn}
+            </if>
+            <if test="parentId != null and parentId != ''">
+                and t1.parent_id = #{parentId}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+
+    <select id="selectCgPage" resultType="com.things.cgomp.common.device.pojo.device.DeviceGridVo">
+        select distinct
+               d.device_id,
+               d.sn,
+               d.alias_sn,
+               d.name, d.charge_type, ds.name as siteName,
+               d.operator_id,
+               op.name operatorName ,  d.status,
+        <include refid="getRunStatus"/> netStatus,
+        d.create_time,
+        d.is_free,
+        d.pay_rule_id,
+        p.id productId,
+        pm.name productFactory,
+        p.model productModel
+        from device_info d
+        left join device_connect_status cs on cs.device_id = d.device_id
+        left join device_site ds on ds.id = d.site_id
+        left join system_org_site os on os.site_id = ds.id
+        left join system_user_site us on us.site_id = ds.id
+        left join system_user_operator uop on uop.operator_id = ds.operator_id
+        left join system_operator op on d.operator_id = op.operator_id
+        left join system_user su on su.user_id = op.user_id
+        left join device_product p on p.id = d.product_id
+        left join device_product_model pm on p.factory_id = pm.id
+        where d.status != 2
+            AND d.component = 0
+        <if test="operatorId != null ">
+            AND d.operator_id = #{operatorId}
+        </if>
+        <if test="name != null and name != '' ">
+            AND d.name like concat('%',#{name},'%')
+        </if>
+        <if test="sn != null and sn != '' ">
+            AND d.sn like concat('%',#{sn},'%')
+        </if>
+        <if test="siteId != null">
+            AND d.site_id = #{siteId}
+        </if>
+        <if test="siteName != null and siteName != '' ">
+            AND ds.name like concat('%',#{siteName},'%')
+        </if>
+        <if test="factoryId != null  ">
+            AND p.factory_id =#{factoryId}
+        </if>
+        <if test="productModel != null and productModel != '' ">
+            AND p.model like concat('%',#{productModel},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by create_time desc
+    </select>
+
+    <select id="selectDevices" resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+            d.*,
+            <include refid="getPortStatus"/>
+        from device_info d
+        left join device_port_status dps on dps.port_id = d.device_id
+        left join device_connect_status cs on cs.device_id = d.device_id
+        <where>
+            1 = 1 and d.status in (0,1)
+            <if test="siteIds != null and siteIds.size() > 0">
+                and d.site_id in
+                <foreach collection="siteIds" item="siteId" open="(" separator="," close=")">
+                    #{siteId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectSimpleDeviceGrids" resultType="com.things.cgomp.common.device.pojo.device.SimpleDeviceVo">
+        select distinct d.*
+        from device_info d
+        left join device_site ds on ds.id = d.site_id
+        left join system_org_site os on os.site_id = ds.id
+        left join system_user_site us on us.site_id = ds.id
+        left join system_user_operator uop on uop.operator_id = ds.operator_id
+        where d.status != 2
+            AND d.component = 0
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by create_time desc
+    </select>
+
+    <select id="countDevices" resultType="java.lang.Integer">
+        select
+            count(*)
+        from device_info d
+        where d.status != 2
+            AND d.parent_id = #{parentId}
+    </select>
+
+    <select id="selectDevicesByParentId"
+            resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+            d.*,
+            <include refid="getPortStatus"/>
+        from device_info d
+        left join device_port_status dps on dps.port_id = d.device_id
+        left join device_connect_status cs on cs.device_id = d.device_id
+        <where>
+            1 = 1 and d.status in (0,1)
+            and d.parent_id = #{parentId}
+        </where>
+    </select>
+
+    <select id="selectDevicePortsByParentId"
+            resultType="com.things.cgomp.common.device.pojo.device.DevicePortVo">
+        select
+            d.*,
+            <include refid="getPortStatus"/>,
+            <include refid="getPortStatusDuration"/>
+        from device_info d
+            left join device_port_status dps on dps.port_id = d.device_id
+            left join device_connect_status cs on cs.device_id = d.device_id
+        <where>
+            d.status in (0,1) and d.component = 1
+            and d.parent_id = #{parentId}
+        </where>
+    </select>
+
+    <select id="selectDevicePorts" resultType="com.things.cgomp.common.device.pojo.device.DevicePortVo">
+        select distinct
+            d.device_id,
+            d.alias_sn,
+            d.name,
+            d.charge_type,
+            d.operator_id,
+            op.name operatorName ,
+            d.create_time,
+            dp.device_id pileId,
+            dp.sn pileSn,
+            dp.name pileName,
+            ds.name siteName,
+            d.status,
+            dps.order_sn,
+            <include refid="getPortStatus"/>,
+            <include refid="getPortStatusDuration"/>
+        from device_info d
+            left join device_connect_status cs on cs.device_id = d.device_id
+            left join system_operator op on d.operator_id = op.operator_id
+            left join system_user su on su.user_id = op.user_id
+            left join device_info dp on dp.device_id = d.parent_id
+            left join device_port_status dps on dps.port_id = d.device_id
+            left join device_site ds on ds.id = d.site_id
+            left join system_org_site os on os.site_id = ds.id
+            left join system_user_site us on us.site_id = ds.id
+            left join system_user_operator uop on uop.operator_id = ds.operator_id
+        where d.status != 2
+            AND d.component = 1
+        <if test="pileSn != null and pileSn != '' ">
+            AND dp.sn like concat('%',#{pileSn},'%')
+        </if>
+        <if test="pileName != null and pileName != '' ">
+            AND dp.name like concat('%',#{pileName},'%')
+        </if>
+        <if test="pileId != null">
+            AND dp.device_id = #{pileId}
+        </if>
+        <if test="siteId != null">
+            AND d.site_id = #{siteId}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by create_time desc
+    </select>
+
+    <select id="selectDeviceList" resultType="com.things.cgomp.common.device.pojo.device.DeviceDTO">
+        select distinct
+            d.device_id,
+            d.parent_id,
+            d.sn,
+            d.alias_sn,
+            d.name,
+            ds.name site_name,
+            d.charge_type,
+            d.operator_id,
+            d.product_id,
+            d.create_time,
+            d.status,
+            d.component,
+        <include refid="getRunStatus"/> net_status,
+        <include refid="getPortStatus"/>,
+        <include refid="getPortStatusDuration"/>
+        from device_info d
+            left join device_connect_status cs on cs.device_id = d.device_id
+            left join device_port_status dps on dps.port_id = d.device_id
+            left join device_site ds on ds.id = d.site_id
+            left join system_org_site os on os.site_id = ds.id
+            left join system_user_site us on us.site_id = ds.id
+            left join system_user_operator uop on uop.operator_id = ds.operator_id
+        where d.status != 2
+            <if test="deviceId != null">
+                and (d.device_id = #{deviceId} or d.parent_id = #{deviceId})
+            </if>
+            <!-- 数据范围过滤 -->
+            ${params.dataScope}
+        order by create_time desc
+    </select>
+
+    <!--获取运行状态sql段 运行状态：0-离线 1-在线  !-->
+    <sql id="getRunStatus">
+        IF((cs.status = 1 and now() > cs.valid_time) or cs.`status` = 0 or cs.valid_time is null,
+        0,
+        1
+        )
+    </sql>
+
+    <sql id="getPortStatus">
+        case
+            when <include refid="getRunStatus"/> = 0 then 0
+            when dps.status is null then 0
+            when dps.status = 2 then if(dps.port_inserted, if(length(dps.vin) > 0, 5, 4), 2)
+            else dps.status
+        end as portStatus,
+        if(dps.home_status is null, 2, dps.home_status) as home_status
+    </sql>
+
+    <sql id="getPortStatusDuration">
+        if(<include refid="getRunStatus"/> = 0,
+            timestampdiff(SECOND, cs.update_time, sysdate()),
+            if(dps.status = 2 and dps.port_inserted and length(dps.vin) <![CDATA[ <= ]]> 0,
+                (unix_timestamp() - dps.port_inserted_time / 1000),
+                (unix_timestamp() - dps.status_time / 1000)
+            )
+        ) / 3600 as port_status_duration
+    </sql>
+
+    <select id="selectDeviceConnnectInfo" resultType="com.things.cgomp.common.device.pojo.device.DeviceConnectDO">
+        select d.device_id,
+        d.sn,
+        d.alias_sn,
+        <include refid="getRunStatus"/> netStatus,
+        d.create_time,
+        cs.broker_id,
+        cs.node_id
+        from device_info d
+        left join device_connect_status cs on cs.device_id = d.device_id
+        where d.status != 2
+        and d.device_id =#{deviceId}
+    </select>
+
+    <select id="selectDevicesByPayRuleId"
+            resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+            d.*
+        from device_info d
+        <where>
+            1 = 1
+            and d.pay_rule_id = #{payRuleId}
+        </where>
+    </select>
+
+    <select id="selectChild" resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+        d.*
+        from device_info d
+        <where>
+            1 = 1 and d.status =1
+            and d.parent_id = #{parentId}
+        </where>
+    </select>
+
+    <select id="selectPortDevice" resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+        d.*,
+        dps.order_sn,
+        <include refid="getPortStatus"/>
+        from device_info d
+        left join device_port_status dps on dps.port_id = d.device_id
+        left join device_connect_status cs on cs.device_id = d.device_id
+        <where>
+            1 = 1 and d.status = 1
+            <if test="deviceId != null and deviceId != ''">
+                and d.device_id = #{deviceId}
+            </if>
+        </where>
+    </select>
+    <select id="selectBySn" resultType="com.things.cgomp.common.device.dao.device.domain.DeviceInfo">
+        select
+        d.*,
+        <include refid="getPortStatus"/>
+        from device_info d
+        left join device_port_status dps on dps.port_id = d.device_id
+        left join device_connect_status cs on cs.device_id = d.device_id
+        <where>
+            1 = 1 and d.status = 1
+            <if test="sn != null and sn != ''">
+                and d.sn = #{sn}
+            </if>
+        </where>
+    </select>
+
+    <sql id="selectDevice">
+        select d.*,
+               u.real_name as create_user,
+               ds.name as site_name,
+               p.model as product_model,
+               op.name as operatorName,
+               if(d.component = 0, d.sn, pd.sn) as pile_sn,
+               <include refid="getRunStatus"/> as net_status
+        from device_info d
+             left join device_info pd on pd.device_id = d.parent_id
+             left join device_site ds on ds.id = d.site_id
+             left join system_user u on u.user_id = d.create_by
+             left join device_connect_status cs on cs.device_id = d.device_id
+             left join device_product p on p.id = d.product_id
+             left join system_operator op on d.operator_id = op.operator_id
+    </sql>
+
+    <select id="selectDeviceById" resultType="com.things.cgomp.common.device.pojo.device.DeviceDTO">
+        <include refid="selectDevice"/>
+        <where>
+            d.status in (0,1) and d.device_id = #{deviceId}
+        </where>
+    </select>
+
+    <select id="selectDeviceByIds" resultType="com.things.cgomp.common.device.pojo.device.DeviceGridVo">
+        <include refid="selectDevice"/>
+        <where>
+            1 = 1 and d.status in (0,1)
+            <if test="ids != null and ids.size() > 0">
+                and d.device_id in
+                <foreach collection="ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="selectDeviceCount" resultType="com.things.cgomp.common.device.pojo.device.DeviceCount">
+        select
+            count(r.device_id)                                                                                  as total_count,
+            sum(IF((r.status = 1 and now() > r.valid_time) or r.`status` = 0 or r.valid_time is null, 0, 1))    as online_count,
+            sum(IF((r.status = 1 and now() > r.valid_time) or r.`status` = 0 or r.valid_time is null, 1, 0))    as offline_count
+        from (
+            select distinct
+                d.device_id, cs.status, cs.valid_time
+            from device_info d
+                left join device_connect_status cs on cs.device_id = d.device_id
+                left join device_site ds on ds.id = d.site_id
+                left join system_org_site os on os.site_id = ds.id
+                left join system_user_site us on us.site_id = ds.id
+                left join system_user_operator uop on uop.operator_id = ds.operator_id
+            where d.status = 1
+                <if test="component != null">
+                    and d.component = #{component}
+                </if>
+                <if test="operatorId != null">
+                    and d.operator_id = #{operatorId}
+                </if>
+                <if test="siteId != null">
+                    and d.site_id = #{siteId}
+                </if>
+                <if test="deviceId != null">
+                    and d.device_id = #{deviceId}
+                </if>
+                <if test="sn != null">
+                    and d.sn = #{sn}
+                </if>
+                <!-- 数据范围过滤 -->
+                ${params.dataScope}
+            ) as r
+    </select>
+
+    <update id="updateDeviceCurrentPayRule">
+        update device_info set current_pay_rule_id =#{currentPayRuleId}, current_pay_model_id=#{currentModelId}
+        where device_id =#{deviceId}
+
+    </update>
+
+</mapper>

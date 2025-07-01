@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.AppUserGroupMapper">
+
+    <select id="selectGroups" resultType="com.things.cgomp.system.domain.vo.AppUserGroupVo">
+        select
+            ug.*,
+            cu.real_name createByName,
+            uu.real_name updateByName
+        from app_user_group ug
+        LEFT JOIN system_operator op ON ug.operator_id = op.operator_id
+        LEFT JOIN system_user cu ON cu.user_id = ug.create_by
+        LEFT JOIN system_user uu ON uu.user_id = ug.update_by
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ug.operator_id
+        where ug.del_flag = 0
+        <if test="name != null and name !=''">
+            and ug.name like concat('%',#{name},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by ug.create_time desc
+    </select>
+
+    <select id="selectPullDownGroups"
+            resultType="com.things.cgomp.system.domain.vo.appusergroup.AppUserGroupListGroup">
+        select
+            ug.*
+        from app_user_group ug
+        LEFT JOIN system_operator op ON ug.operator_id = op.operator_id
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ug.operator_id
+        where ug.del_flag = 0
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by ug.create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.AppUserBlacklistMapper">
+
+    <resultMap id="blacklistResultMap" type="com.things.cgomp.app.api.domain.AppUserBlacklist">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="siteRange" column="site_range"/>
+        <result property="remark" column="remark"/>
+        <result property="unsealTime" column="unseal_time"/>
+        <result property="createBy" column="create_by"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUser" column="update_user"/>
+        <result property="nickName" column="nick_name"/>
+        <result property="mobile" column="mobile"/>
+        <result property="siteIds" column="site_ids" typeHandler="com.things.cgomp.common.core.handler.JsonLongSetTypeHandler"/>
+    </resultMap>
+
+    <sql id="blacklistR">
+        select bl.id, bl.user_id, bl.site_range, bl.site_ids, bl.remark, bl.unseal_time, bl.create_by, bl.create_time, bl.update_by, bl.update_time,
+               u.nick_name, u.mobile, up.real_name as update_user
+        from app_user_blacklist bl
+                 left join app_user u on u.user_id = bl.user_id
+                 left join system_user up on up.user_id = bl.update_by
+    </sql>
+
+    <select id="selectBlackList" resultMap="blacklistResultMap">
+        <include refid="blacklistR"/>
+        where 1 = 1
+        <if test="mobile != null and mobile != ''">
+            AND u.mobile like concat('%', #{mobile}, '%')
+        </if>
+        order by bl.update_time desc
+    </select>
+
+    <select id="selectBlackListById" resultMap="blacklistResultMap">
+        <include refid="blacklistR"/>
+        where bl.id = #{id}
+    </select>
+</mapper>

@@ -1,0 +1,6 @@
+com.things.cgomp.system.api.factory.RemoteUserFallbackFactory
+com.things.cgomp.system.api.factory.RemoteLogFallbackFactory
+com.things.cgomp.system.api.factory.RemoteOperatorFallbackFactory
+com.things.cgomp.system.api.factory.RemoteUserAccountFallbackFactory
+com.things.cgomp.system.api.factory.RemoteSiteEfFallbackFactory
+com.things.cgomp.system.api.factory.RemoteAppUserRechargeFallbackFactory

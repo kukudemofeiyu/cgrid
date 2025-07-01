@@ -1,0 +1,35 @@
+# Tomcat
+server:
+  port: 9010
+
+# Spring
+spring: 
+  application:
+    # 应用名称
+    name: cg-gateway-device
+  profiles:
+    # 环境配置
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 192.168.3.45:8848
+        register-enabled: false
+      config:
+        # 配置中心地址
+        server-addr: 192.168.3.45:8848
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+node:
+  config:
+    visitPort: ${server.port}
+
+# 本地环境配置不监听rocketmq
+rocketmq:
+  consumer:
+    enable: false

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.td.mapper.DynamicsDataMapper">
+
+
+    <select id="selectHistoryDataByKey" resultType="com.things.cgomp.common.device.dao.td.domain.SingleTsValue">
+        select
+            `_ts`, `${key}` as `value`
+        from
+            `${table}`
+        where
+            `device_id` = #{deviceId} and `${key}` is not null
+            <if test="beginTime != null and beginTime != ''">
+                and `_ts` <![CDATA[ >= ]]> #{beginTime}
+            </if>
+            <if test="endTime != null and endTime != ''">
+                and `_ts` <![CDATA[ <= ]]> #{endTime}
+            </if>
+        order by `_ts`
+        limit 10000
+    </select>
+</mapper>

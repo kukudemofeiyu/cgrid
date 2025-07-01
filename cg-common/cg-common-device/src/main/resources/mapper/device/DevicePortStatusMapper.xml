@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.device.mapper.DevicePortStatusMapper">
+
+
+    <insert id="saveOrUpdateStatus">
+        insert into device_port_status(port_id, status, vin, order_sn, status_time , port_inserted, port_inserted_time, home_status, update_time)
+        values (#{portId}, #{status}, #{vin}, #{orderSn}, #{statusTime}, #{portInserted}, #{portInsertedTime}, #{homeStatus}, #{updateTime})
+            on duplicate key update
+                <if test="status != null">status = values(status),</if>
+                <if test="statusTime != null">status_time = values(status_time),</if>
+                <if test="portInserted != null">port_inserted = values(port_inserted),</if>
+                <if test="homeStatus != null">home_status = values(home_status),</if>
+                order_sn = values(order_sn),
+                port_inserted_time = values(port_inserted_time),
+                update_time = values(update_time)
+    </insert>
+
+    <update id="updateVin">
+        update
+            device_port_status
+        set
+            vin = #{vin}, update_time = #{updateTime}
+        where
+            port_id = #{portId}
+    </update>
+
+    <!--获取运行状态sql段 运行状态：0-离线 1-在线  !-->
+    <sql id="runStatus">
+            (cs.status = 1 and now() > cs.valid_time) or cs.`status` = 0 or cs.valid_time is null
+    </sql>
+
+    <sql id="getPortStatus">
+        case
+            when <include refid="runStatus"/> then 0
+            when dps.status is null then 0
+            when dps.status = 2 then if(dps.port_inserted, if(length(dps.vin) > 0, 5, 4), 2)
+            else dps.status
+        end as port_status,
+        if(dps.home_status is null, 2, dps.home_status) as home_status
+    </sql>
+
+    <sql id="getPortStatusDuration">
+        if(<include refid="runStatus"/>,
+            timestampdiff(SECOND, cs.update_time, sysdate()),
+            if(dps.status = 2 and dps.port_inserted and length(dps.vin) <![CDATA[ <= ]]> 0,
+                (unix_timestamp() - dps.port_inserted_time / 1000),
+                (unix_timestamp() - dps.status_time / 1000)
+            )
+        ) / 3600 as port_status_duration
+    </sql>
+
+    <sql id="getPortStatusStartTime">
+        if(<include refid="runStatus"/>,
+            unix_timestamp(cs.update_time) * 1000,
+            if(dps.status = 2 and dps.port_inserted and length(dps.vin) <![CDATA[ <= ]]> 0,
+            dps.port_inserted_time,
+            dps.status_time
+            )
+        ) as port_status_startTime
+    </sql>
+
+    <select id="selectDevicePortStatus" resultType="com.things.cgomp.common.device.dao.device.domain.DevicePortStatus">
+        select dps.port_id, dps.vin, dps.order_sn, dps.status_time, dps.port_inserted, dps.port_inserted_time, dps.home_status, dps.update_time,
+                IF(<include refid="runStatus"/>, 0, dps.status) `status`
+        from device_port_status dps
+        left join device_connect_status cs on cs.device_id = dps.port_id
+        where dps.port_id = #{portId}
+    </select>
+    <select id="selectDevicePortStatusDetail" resultType="com.things.cgomp.common.device.dao.device.domain.DevicePortStatus">
+        select dps.port_id, dps.vin, dps.order_sn, dps.status_time, dps.port_inserted, dps.port_inserted_time, dps.home_status, dps.update_time,
+                IF(<include refid="runStatus"/>, 0, dps.status) `status`,
+                <include refid="getPortStatus"/>,
+                <include refid="getPortStatusStartTime"/>,
+                <include refid="getPortStatusDuration"/>
+        from device_port_status dps
+            left join device_connect_status cs on cs.device_id = dps.port_id
+        where dps.port_id = #{portId}
+    </select>
+</mapper>

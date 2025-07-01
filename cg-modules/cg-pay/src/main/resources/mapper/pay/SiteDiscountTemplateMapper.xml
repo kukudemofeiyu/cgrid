@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.SiteDiscountTemplateMapper">
+
+    <select id="selectTemplates" resultType="com.things.cgomp.pay.vo.sitediscount.SiteDiscountTemplateVo">
+        select
+            sdt.*
+        from pay_site_discount_template sdt
+        LEFT JOIN system_operator op ON sdt.operator_id = op.operator_id
+        LEFT JOIN system_user_operator uop ON uop.operator_id = sdt.operator_id
+        where sdt.del_flag = 0
+        <if test="activityType != null">
+            and sdt.activity_type = #{activityType}
+        </if>
+        <if test="name != null and name !=''">
+            and sdt.name like concat('%',#{name},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by sdt.create_time desc
+    </select>
+</mapper>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.app.mapper.AppUserMapper">
+
+    <resultMap id="BaseResultMap" type="com.things.cgomp.app.api.domain.AppUser">
+            <id property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="wxOpenId" column="wx_open_id" jdbcType="VARCHAR"/>
+            <result property="wxUnionId" column="wx_union_id" jdbcType="VARCHAR"/>
+            <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+            <result property="avatar" column="avatar" jdbcType="VARCHAR"/>
+            <result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="CHAR"/>
+            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id,wx_open_id,wx_union_id,
+        mobile,avatar,nick_name,
+        status,create_time
+    </sql>
+    <select id="findByOpenId" resultType="com.things.cgomp.app.api.domain.AppUser">
+        select *
+        from app_user
+        where wx_open_id = #{openid} limit 1
+    </select>
+    <select id="findByMobile" resultType="com.things.cgomp.app.api.domain.AppUser">
+        select *
+        from app_user
+        where mobile = #{mobile} limit 1
+    </select>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.CouponMapper">
+
+    <select id="selectCoupons" resultType="com.things.cgomp.pay.vo.coupon.CouponVo">
+        select
+            a.*,
+            au.mobile,
+            ca.name activityName,
+            ca.type activityType,
+            op.name operatorName
+        from pay_coupon a
+        LEFT JOIN app_user au ON au.user_id = a.user_id
+        LEFT JOIN pay_coupon_activity ca ON ca.id = a.activity_id
+        LEFT JOIN system_operator op ON ca.operator_id = op.operator_id
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ca.operator_id
+        where 1 = 1
+        <if test="mobile != null and mobile !=''">
+            and au.mobile like concat('%',#{mobile},'%')
+        </if>
+        <if test="activityType != null">
+            and ca.type = #{activityType}
+        </if>
+        <if test="status == 0">
+            and a.end_time &gt;= NOW()
+            and a.status = 0
+        </if>
+        <if test="status == 1">
+            and a.status = #{status}
+        </if>
+        <if test="status == 2">
+            and a.end_time &lt; NOW()
+            and a.status = 0
+        </if>
+        <if test="startTime != null">
+            and a.end_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and a.start_time &lt;= #{endTime}
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by a.start_time desc
+    </select>
+
+    <select id="selectAvailableCoupons" resultType="com.things.cgomp.pay.api.domain.Coupon">
+        select
+            c.*
+        from pay_coupon c
+        inner JOIN pay_coupon_activity ca ON ca.id = c.activity_id
+        inner JOIN pay_coupon_template ct ON ct.id = c.template_id
+        left join pay_coupon_template_site cts on cts.template_id = ct.id
+        where c.status = 0
+        and c.user_id = #{userId}
+        and ca.operator_id = #{operatorId}
+        AND c.end_time &gt;= #{time}
+        AND c.start_time &lt;= #{time}
+        and (ct.site_dimension = 0
+            or (ct.site_dimension = 1 and cts.site_id = #{siteId})
+        )
+        group by c.id,ct.id
+    </select>
+
+</mapper>

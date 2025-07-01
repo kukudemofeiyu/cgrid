@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.CouponTemplateSiteMapper">
+
+    <select id="getSiteIds" resultType="java.lang.Long">
+        select
+            site_id
+        from pay_coupon_template_site
+        where template_id = #{templateId}
+    </select>
+
+    <select id="getTemplateSites" resultType="com.things.cgomp.pay.domain.CouponTemplateSite">
+        select
+            *
+        from pay_coupon_template_site
+        where template_id in
+        <foreach collection="templateIds" item="templateId" open="(" separator="," close=")">
+            #{templateId}
+        </foreach>
+    </select>
+</mapper>

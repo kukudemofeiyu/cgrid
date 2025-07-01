@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.td.mapper.DeviceCmdLogMapper">
+
+    <insert id="insertDeviceCmdLogDataBatch">
+        insert into
+        <foreach collection="deviceCmdLogList" item="item" index="index" separator=" ">
+            `log-#{item.deviceId}`
+            using device_cmd_log (device_id) tags(#{item.deviceId})
+            (
+            `_ts`,
+            `update_ts`,
+            `up_down`,
+            `cmd`,
+            `serial_no`,
+            `body`,
+            `port_id`,
+            `cmd_desc`,
+            `origin_hex`,
+            `secret`
+            )
+            values
+            (
+            #{item.ts},
+            #{item.updateTs},
+            #{item.upDown},
+            #{item.cmd},
+            #{item.serialNo},
+            #{item.body},
+            #{item.portId},
+            #{item.cmdDesc},
+            #{item.originHex},
+            #{item.secret}
+            )
+        </foreach>
+    </insert>
+
+    <select id="selectDeviceCmdLog"  resultType="com.things.cgomp.common.device.dao.td.domain.DeviceCmdLogData">
+        select
+            `device_id`,
+            `_ts` ts,
+            `port_id`,
+            `up_down`,
+            `cmd`,
+            `serial_no`,
+            `body`,
+            `cmd_desc`,
+            `origin_hex`,
+            `secret`
+        from device_cmd_log
+        <where>
+            1 = 1
+            <if test="deviceId != null and deviceId != ''">
+                and device_id = #{deviceId}
+            </if>
+            <if test="startTime != null">
+                and _ts <![CDATA[ >= ]]> #{startTime}
+            </if>
+            <if test="endTime != null">
+                and _ts <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="cmd != null  and cmd != ''">
+                AND cmd_id like concat('%',#{cmd},'%')
+            </if>
+        </where>
+        order by _ts DESC
+    </select>
+
+</mapper>

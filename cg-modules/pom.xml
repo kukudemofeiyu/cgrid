@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.things.cgomp</groupId>
+        <artifactId>cg-omp</artifactId>
+        <version>1.0.1</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <modules>
+        <module>cg-alarm</module>
+        <module>cg-app</module>
+        <module>cg-device</module>
+        <module>cg-file</module>
+        <module>cg-job</module>
+        <module>cg-order</module>
+        <module>cg-pay</module>
+        <module>cg-system</module>
+        <module>cg_device_scale</module>
+        <module>cg-device-data</module>
+    </modules>
+
+    <artifactId>cg-modules</artifactId>
+    <packaging>pom</packaging>
+
+    <description>
+        cg-modules业务模块
+    </description>
+
+</project>

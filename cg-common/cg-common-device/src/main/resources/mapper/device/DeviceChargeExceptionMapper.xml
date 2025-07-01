@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.device.mapper.DeviceChargeExceptionMapper">
+
+    <delete id="deleteByOrderNo">
+        delete from device_charge_record_exception
+        where order_no =#{orderNo}
+    </delete>
+
+    <select id="queryAll"
+            resultType="com.things.cgomp.common.device.dao.device.domain.DeviceChargeRecordException">
+        select * from device_charge_record_exception dcre
+        where
+            (unix_timestamp()  - unix_timestamp(dcre.commit_time)) > 120
+    </select>
+
+    <select id="findIdByOrderNo" resultType="java.lang.Long">
+        select id
+        from device_charge_record_exception
+        where order_no =#{orderNo}
+    </select>
+</mapper>

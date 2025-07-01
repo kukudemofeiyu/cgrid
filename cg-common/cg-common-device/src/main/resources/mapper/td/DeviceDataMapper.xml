@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.td.mapper.DeviceDataMapper">
+
+    <insert id="insertDevicePortDataBatch">
+        insert into
+        <foreach collection="devicePortDataList" item="item" index="index" separator=" ">
+            `d-#{item.deviceId}`
+            using device_port_data (device_id) tags(#{item.deviceId})
+            (
+                `_ts`,
+                `order_sn`
+                `voltage`,
+                `current`,
+                `power`,
+                `temperature`,
+                `port_sn`,
+                `soc`,
+                `charge_energy`,
+                `time_charge`,
+                `time_left`,
+                `amount`,
+                `port_status`,
+                `port_homing`,
+                `port_inserted`,
+                `gun_line_temperature`,
+                `pile_body_temperature`
+            )
+            values
+            (
+                #{item.ts},
+                #{item.orderSn},
+                #{item.voltage},
+                #{item.current},
+                #{item.power},
+                #{item.temperature},
+                #{item.portSn},
+                #{item.soc},
+                #{item.chargeEnergy},
+                #{item.timeCharge},
+                #{item.timeLeft},
+                #{item.amount},
+                #{item.portStatus},
+                #{item.portHoming},
+                #{item.portInserted},
+                #{item.gunLineTemperature},
+                #{item.pileBodyTemperature}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertDevicePortStatusBatch">
+        insert into
+        <foreach collection="devicePortStatusList" item="item" index="index" separator=" ">
+            `s-#{item.deviceId}`
+            using device_port_status (device_id) tags(#{item.deviceId})
+            (
+            `_ts`,
+            `order_sn`,
+            `status`,
+            `vin`,
+            `status_time`,
+            `port_inserted`,
+            `port_inserted_time`,
+            `home_status`,
+            `desc`
+            )
+            values
+            (
+            #{item.ts},
+            #{item.orderSn},
+            #{item.status},
+            #{item.vin},
+            #{item.statusTime},
+            #{item.portInserted},
+            #{item.portInsertedTime},
+            #{item.homeStatus},
+            #{item.desc}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.common.device.dao.device.mapper.DeviceInfoMapper">
+
+    <select id="findDeviceInfo" resultType="com.things.cgomp.devicescale.domain.dto.DeviceInfo">
+        select *
+        from device_info t1
+        <where>
+            1 = 1 and t1.status in (0,1)
+            <if test="sn != null and sn != ''">
+                and t1.sn = #{sn}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+
+    <select id="selectCgPage" resultType="com.things.cgomp.devicescale.domain.dto.DeviceVO">
+        select d.device_id,
+        d.sn, d.name, d.charge_type, ds.name as siteName,
+        d.operator_id,
+        op.name operatorName , d.status,
+        <include refid="getRunStatus"/>
+        netStatus,
+        d.create_time,
+        d.is_free,
+        <if test="component == 1 ">
+            dp.sn pileSn,
+            dp.name pileName,
+        </if>
+        d.port_status,
+        d.pay_rule_id,
+        p.id productId,
+        p.factory productFactory,
+        p.model productModel
+        from device_info d
+        left join device_connect_status cs on cs.device_id = d.device_id
+        left join device_site ds on ds.id = d.site_id
+        left join system_operator op on d.operator_id = op.operator_id
+        left join system_user su on su.user_id = op.user_id
+        left join device_product p on p.id = d.product_id
+        <if test="component == 1 ">
+            left join device_info dp on dp.device_id = d.parent_id
+        </if>
+        where d.status != 2
+        <if test="component != null ">
+            AND d.component = #{component}
+        </if>
+        <if test="name != null and name != '' ">
+            AND d.name like concat('%',#{name},'%')
+        </if>
+        <if test="sn != null and sn != '' ">
+            AND d.sn like concat('%',#{sn},'%')
+        </if>
+        <if test="siteName != null and siteName != '' ">
+            AND ds.name like concat('%',#{siteName},'%')
+        </if>
+        <if test="productFactory != null and productFactory != '' ">
+            AND p.factory like concat('%',#{productFactory},'%')
+        </if>
+        <if test="productModel != null and productModel != '' ">
+            AND p.model like concat('%',#{productModel},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by create_time desc
+    </select>
+
+    <select id="selectDevices" resultType="com.things.cgomp.devicescale.domain.dto.DeviceInfo">
+        select
+        d.*
+        from device_info d
+        <where>
+            1 = 1 and d.status in (0,1)
+            <if test="siteIds != null and siteIds.size() > 0">
+                and d.site_id in
+                <foreach collection="siteIds" item="siteId" open="(" separator="," close=")">
+                    #{siteId}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+
+    <select id="countDevices" resultType="java.lang.Integer">
+        select count(*)
+        from device_info d
+        where d.status != 2
+            AND d.parent_id = #{parentId}
+    </select>
+
+    <select id="selectDevicesByParentId"
+            resultType="com.things.cgomp.devicescale.domain.dto.DeviceInfo">
+        select
+        d.*
+        from device_info d
+        <where>
+            1 = 1 and d.status in (0,1)
+            and d.parent_id = #{parentId}
+        </where>
+    </select>
+
+    <sql id="getRunStatus">
+        IF
+        ((cs.status = 1 and now() > cs.valid_time) or cs.`status` = 0 or cs.valid_time is null,
+        0,
+        1
+        )
+    </sql>
+</mapper>

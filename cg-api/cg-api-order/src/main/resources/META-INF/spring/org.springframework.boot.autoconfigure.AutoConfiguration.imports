@@ -1,0 +1,5 @@
+com.things.cgomp.order.api.factory.RemoteCommissionRuleFallbackFactory
+com.things.cgomp.order.api.factory.RemoteOrderFallbackFactory
+com.things.cgomp.order.api.factory.RemoteOrderStatisticsFallbackFactory
+com.things.cgomp.order.api.factory.RemoteOrderStepFallbackFactory
+com.things.cgomp.order.api.factory.RemoteShareholdersFallbackFactory

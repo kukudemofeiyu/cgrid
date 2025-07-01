@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.SysAmountRecordMapper">
+
+
+    <select id="selectRecordList" resultType="com.things.cgomp.system.api.domain.SysAmountRecord">
+        select ar.id,
+               ar.card_no,
+               ar.bind_user_id,
+               ar.operate_user_id,
+               ar.serial_number,
+               ar.amount,
+               ar.refund_amount,
+               ar.channel,
+               ar.type,
+               ar.record_type,
+               ar.status,
+               ar.remark,
+               ar.change_after,
+               ar.event_time,
+               ar.update_time,
+               IF(ar.module = 3, au1.nick_name, u1.real_name)                          as bind_user,
+               IF(ar.module = 3, au1.mobile, u1.mobile)                                as bind_mobile,
+               IF(ar.module = 3, if(ar.channel = 1, au2.mobile, u2.mobile), u2.mobile) as operate_mobile
+        from system_amount_record ar
+                 left join system_user u1 on u1.user_id = ar.bind_user_id
+                 left join system_user u2 on u2.user_id = ar.operate_user_id
+                 left join app_user au1 on au1.user_id = ar.bind_user_id
+                 left join app_user au2 on au2.user_id = ar.operate_user_id
+        where 1 = 1
+        <if test="keyword != null and keyword != ''">
+            and IF(ar.module = 3,
+                    au1.nick_name like concat('%',#{keyword},'%') or au1.mobile like concat('%',#{keyword},'%'),
+                    u1.real_name like concat('%',#{keyword},'%') or u1.mobile like concat('%',#{keyword},'%'))
+        </if>
+        <if test="id != null">
+            and ar.id = #{id}
+        </if>
+        <if test="type != null">
+            and ar.type = #{type}
+        </if>
+        <if test="status != null">
+            and ar.status = #{status}
+        </if>
+        <if test="channel != null">
+            and ar.channel = #{channel}
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and ar.event_time &gt;= #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and ar.event_time &lt;= #{endTime}
+        </if>
+        order by ar.event_time desc
+    </select>
+    <select id="selectAppRechargeRecordList" resultType="com.things.cgomp.system.api.vo.AppRechargeRecordVO">
+        select ar.id,
+               ar.serial_number,
+               ar.amount,
+               ar.type,
+               ar.status,
+               ar.event_time
+        from system_amount_record ar
+                 left join app_user au on au.user_id = ar.bind_user_id
+        where 1 = 1
+          and ar.bind_user_id = #{userId}
+        <if test="beginTime != null and beginTime != ''">
+            and ar.event_time &gt;= #{beginTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and ar.event_time &lt;= #{endTime}
+        </if>
+        order by ar.event_time desc
+    </select>
+</mapper>

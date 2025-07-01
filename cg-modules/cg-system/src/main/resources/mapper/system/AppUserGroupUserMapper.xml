@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.AppUserGroupUserMapper">
+    <delete id="deleteByGroupId">
+        delete from app_user_group_user
+        where group_id =#{groupId}
+    </delete>
+
+    <select id="selectUserIds" resultType="java.lang.Long">
+        select
+            user_id
+        from app_user_group_user
+        where group_id =#{groupId}
+    </select>
+
+    <select id="selectGroupUsers" resultType="com.things.cgomp.system.domain.AppUserGroupUser">
+        select
+            *
+        from app_user_group_user
+        where group_id =
+        <foreach collection="groupIds" item="groupId" open="(" separator="," close=")">
+            #{groupId}
+        </foreach>
+    </select>
+</mapper>

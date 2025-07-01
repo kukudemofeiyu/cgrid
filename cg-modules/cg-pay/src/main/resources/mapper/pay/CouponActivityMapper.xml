@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.pay.mapper.CouponActivityMapper">
+
+    <select id="selectActivities" resultType="com.things.cgomp.pay.vo.coupon.CouponActivityVo">
+        select
+            ca.*,
+            op.name operatorName,
+            cu.real_name createByName,
+            uu.real_name updateByName
+        from pay_coupon_activity ca
+        LEFT JOIN system_operator op ON ca.operator_id = op.operator_id
+        LEFT JOIN system_user cu ON cu.user_id = ca.create_by
+        LEFT JOIN system_user uu ON uu.user_id = ca.update_by
+        LEFT JOIN system_user_operator uop ON uop.operator_id = ca.operator_id
+        where 1 = 1
+        <if test="status == 0">
+            and ca.start_time &gt; CURRENT_DATE()
+            and ca.status = 1
+        </if>
+        <if test="status == 1">
+            and ca.start_time &lt;= CURRENT_DATE()
+            and ca.end_time &gt;= CURRENT_DATE()
+            and ca.status = 1
+        </if>
+        <if test="status == 2">
+            and ca.end_time &lt; CURRENT_DATE()
+            and ca.status = 1
+        </if>
+        <if test="status == 3">
+            and ca.status = #{status}
+        </if>
+        <if test="startTime != null">
+            and ca.end_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            and ca.start_time &lt;= #{endTime}
+        </if>
+        <if test="name != null and name !=''">
+            and ca.name like concat('%',#{name},'%')
+        </if>
+        <if test="operatorName != null and operatorName !=''">
+            and op.name like concat('%',#{operatorName},'%')
+        </if>
+        <!-- 数据范围过滤 -->
+        ${params.dataScope}
+        order by ca.create_time desc
+    </select>
+
+    <select id="selectEnableActivities" resultType="com.things.cgomp.pay.domain.CouponActivity">
+        select
+            ca.*,
+            GROUP_CONCAT(ct.id) templateIdsStr
+        from pay_coupon_activity ca
+        inner join pay_coupon_activity_template cat on cat.activity_id = ca.id
+        inner join pay_coupon_template ct on ct.id = cat.template_id
+        left join pay_coupon_template_site cts on cts.template_id = ct.id
+        where ca.status = 1
+        and ca.type in (1,2)
+        and ca.operator_id = #{operatorId}
+        AND ca.end_time &gt;= #{time}
+        AND ca.start_time &lt;= #{time}
+        and (ct.site_dimension = 0
+            or (ct.site_dimension = 1 and cts.site_id = #{siteId})
+        )
+        and ct.available_number &gt; 0
+        group by ca.id
+    </select>
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.system.mapper.SysWithdrawRecordMapper">
+
+    <select id="selectRefundRecordList" resultType="com.things.cgomp.system.api.vo.AppRefundRecordVO">
+        select id, amount, event_time, status from system_withdraw_record
+        where 1 = 1
+        and user_id = #{userId}
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        <if test="beginTime != null and beginTime != ''">
+            and event_time &gt;= #{params.beginTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            and event_time &lt;= #{params.endTime}
+        </if>
+        order by event_time desc
+    </select>
+</mapper>

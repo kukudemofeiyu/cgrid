@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.things.cgomp.app.mapper.AppUserCarMapper">
+
+    <resultMap id="BaseResultMap" type="com.things.cgomp.app.api.domain.AppUserCar">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="licensePlateNumber" column="license_plate_number" jdbcType="VARCHAR"/>
+        <result property="licensePlateColor" column="license_plate_color" jdbcType="INTEGER"/>
+        <result property="bindTime" column="bind_time" jdbcType="TIMESTAMP"/>
+        <result property="bindStatus" column="bind_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id
+        ,user_id,license_plate_number,
+        license_plate_color,bind_time,bind_status
+    </sql>
+    <update id="updateDefaultCar">
+        UPDATE app_user_car
+        SET is_default = 0
+        WHERE user_id = #{userId}  and is_default = 1;
+    </update>
+    <select id="findByUserIdAndCarNumber" resultType="com.things.cgomp.app.api.domain.AppUserCar">
+        select *
+        from app_user_car
+        where user_id = #{userId}
+        <if test="carNumber != null and carNumber != ''">
+          and license_plate_number = #{carNumber}
+        </if>
+    </select>
+    <select id="findCarListByUserId" resultType="com.things.cgomp.app.api.domain.AppUserCar">
+        select *
+        from app_user_car
+        where user_id = #{userId} and bind_status = 0
+    </select>
+    <select id="findDefaultCarByUserId" resultType="com.things.cgomp.app.api.domain.AppUserCar">
+        select *
+        from app_user_car
+        where user_id = #{userId} and is_default = 1
+    </select>
+</mapper>
