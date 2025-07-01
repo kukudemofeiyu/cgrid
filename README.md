@@ -1,4 +1,4 @@
-# 充电桩管理平台
+# 充电桩管理平台（完全开源！！！）
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![java](https://img.shields.io/badge/Java-1.8%2B-blue)
