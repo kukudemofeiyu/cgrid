@@ -1,0 +1,35 @@
+.container {
+  overflow-y: scroll;
+}
+.sortContainer {
+  display: grid;
+  grid-gap: 8px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(auto-fit, 45px);
+  height: 480px;
+}
+
+.tagText {
+  display: inline-block;
+  max-width: 220px;
+  padding: 4px 8px;
+  overflow: hidden;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.searchContainer {
+  position: sticky;
+  z-index: 1002;
+  top: 0;
+  background-color: #fff;
+  align-items: center;
+  padding-bottom: 32px;
+}
+.tip {
+  color: #999;
+}
+
+.aLine {
+  line-height: 0;
+}

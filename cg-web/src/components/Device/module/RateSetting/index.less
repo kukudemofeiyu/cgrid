@@ -1,0 +1,69 @@
+.tableList {
+  display: flex;
+
+  :global {
+    .ant-pro-card .ant-pro-card-body {
+      padding-inline: 0;
+      padding-right: 24px;
+    }
+  
+  }
+
+  .tableName {
+   line-height: 40px;
+  }
+
+  .table {
+    width: 350px;
+    margin-right: 18px;
+    flex-shrink: 0;
+  }
+
+  .tableRangeList {
+    flex: 1;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: auto;
+  }
+}
+
+.formItem {
+  margin-bottom: 8px;
+}
+
+.timeFormList {
+  :global > {
+   .ant-form-item-row {
+      > .ant-form-item-control {
+        > .ant-form-item-control-input {
+          > .ant-form-item-control-input-content {
+            > div:first-child {
+              overflow: scroll;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.timeForm {
+  width: 350px;
+  margin-right: 18px;
+  flex-shrink: 0;
+  :global {
+    .ant-form-item-row {
+       > .ant-form-item-control {
+         > .ant-form-item-control-input {
+           > .ant-form-item-control-input-content {
+             > div:first-child {
+               overflow:hidden;
+               white-space:hidden
+             }
+           }
+         }
+       }
+     }
+   }
+}

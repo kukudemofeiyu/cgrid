@@ -1,0 +1,42 @@
+.label {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.detail {
+  :global {
+    .ant-descriptions-row>th {
+      padding-bottom: 2px;
+    }
+    .ant-descriptions-item-label {
+      word-break: break-all;
+      color: #909399;
+    }
+    .ant-descriptions-item-content {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+      color: #303133;
+      white-space: nowrap;
+    }
+  }
+}
+
+.value {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.empty {
+  padding: 0 !important;
+  :global {
+    .ant-descriptions-item-container {
+      height: 0 !important;
+      overflow: hidden !important;
+    }
+  }
+}

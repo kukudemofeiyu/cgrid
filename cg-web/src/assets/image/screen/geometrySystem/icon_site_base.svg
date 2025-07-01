@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="363px" height="223px" viewBox="0 0 363 223" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <filter x="-2.3%" y="-4.0%" width="104.6%" height="108.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="2.67095555" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <linearGradient x1="57.6119%" y1="35.3647247%" x2="32.3596%" y2="66.8550519%" id="linearGradient-2">
+            <stop stop-color="#1463AC" offset="0%"></stop>
+            <stop stop-color="#0E3962" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="94.6054%" y1="43.0909816%" x2="4.6801%" y2="40.2305685%" id="linearGradient-3">
+            <stop stop-color="#0C3257" offset="0%"></stop>
+            <stop stop-color="#1969B5" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="50%" x2="-4.35%" y2="50.9750759%" id="linearGradient-4">
+            <stop stop-color="#4AAEDB" offset="1.08529637%"></stop>
+            <stop stop-color="#3DAAF8" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-5" points="245.544273 200.217025 345.495741 141.770632 100.193467 0 0 57.7218567"></polygon>
+        <filter x="-2.2%" y="-3.7%" width="104.3%" height="107.5%" filterUnits="objectBoundingBox" id="filter-6">
+            <feGaussianBlur stdDeviation="7.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="0" dy="0" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.0392156877   0 0 0 0 0.53725493   0 0 0 0 1  0 0 0 0.600000024 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="0%" y1="36.2732938%" x2="100%" y2="69.3214696%" id="linearGradient-7">
+            <stop stop-color="#062A4D" offset="0%"></stop>
+            <stop stop-color="#052C52" offset="99.6273935%"></stop>
+        </linearGradient>
+        <linearGradient x1="77.3059%" y1="118.611267%" x2="-58422.7051%" y2="-28532.6921%" id="linearGradient-8">
+            <stop stop-color="#006AB4" offset="0%"></stop>
+            <stop stop-color="#003364" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="0%" x2="0%" y2="0%" id="linearGradient-9">
+            <stop stop-color="#3F9BE4" offset="0%"></stop>
+            <stop stop-color="#075894" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="能源云系统V2.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1_7.站控系统（站点）首页全屏_风光柴储充_V2.2" transform="translate(-611.000000, -587.000000)">
+            <g id="2D视图" transform="translate(474.000000, 253.000000)">
+                <g id="系统能流图" transform="translate(0.000000, 52.000000)">
+                    <g id="能流图（全都有）" transform="translate(20.000000, 70.000000)">
+                        <g id="中间2" transform="translate(126.000000, 0.000000)">
+                            <g id="icon_风光柴" transform="translate(0.000000, 203.000000)">
+                                <g id="基座" transform="translate(0.000000, 9.694516)">
+                                    <polygon id="形状_1_拷贝_2-2" fill="#000000" opacity="0.5" filter="url(#filter-1)" points="245.544185 213.741857 345.728094 155.160182 100.258964 13.3871813 0.00729703897 71.2733578"></polygon>
+                                    <polygon id="形状_1_拷贝-2" fill="url(#linearGradient-2)" opacity="0.800000012" points="245.544273 210.360627 345.495741 151.431043 100.258933 9.76440752 0 67.3825127"></polygon>
+                                    <g id="形状_1-2">
+                                        <use fill-opacity="0.899999976" fill="url(#linearGradient-3)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                                        <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                                        <path stroke="url(#linearGradient-4)" stroke-width="0.72604053" d="M100.193178,0.419120192 L344.773437,141.772469 L245.543579,199.796902 L0.725228302,57.7230035 L100.193178,0.419120192 Z" stroke-linejoin="square"></path>
+                                    </g>
+                                    <polygon id="形状_3-2" fill="url(#linearGradient-7)" points="245.544151 210.360627 245.544151 200.217062 0 57.7219229 0 67.3824448"></polygon>
+                                    <polygon id="形状_4-2" fill-opacity="0.600000024" fill="url(#linearGradient-8)" points="245.544151 210.360627 245.544151 200.217048 345.495741 141.77056 345.495741 151.431128"></polygon>
+                                    <line x1="240.47235" y1="205.047209" x2="250.615952" y2="205.147209" id="形状_5-2" stroke="url(#linearGradient-9)" stroke-width="0.5" transform="translate(245.544151, 205.097209) rotate(90.000000) translate(-245.544151, -205.097209) "></line>
+                                    <text id="柴发" transform="translate(214.454939, 168.102359) rotate(30.999989) translate(-214.454939, -168.102359) " font-family="PingFangSC-Semibold, PingFang SC" font-size="12" font-weight="500" line-spacing="18" fill="#ACD9FF">
+                                        <tspan x="202.454939" y="172.102359">柴发</tspan>
+                                    </text>
+                                    <text id="光伏" transform="translate(62.454939, 80.102359) rotate(30.999989) translate(-62.454939, -80.102359) " font-family="PingFangSC-Semibold, PingFang SC" font-size="12" font-weight="500" line-spacing="18" fill="#ACD9FF">
+                                        <tspan x="50.4549392" y="84.1023587">光伏</tspan>
+                                    </text>
+                                    <text id="风机" transform="translate(137.454939, 124.102359) rotate(30.999989) translate(-137.454939, -124.102359) " font-family="PingFangSC-Semibold, PingFang SC" font-size="12" font-weight="500" line-spacing="18" fill="#ACD9FF">
+                                        <tspan x="125.454939" y="128.102359">风机</tspan>
+                                    </text>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

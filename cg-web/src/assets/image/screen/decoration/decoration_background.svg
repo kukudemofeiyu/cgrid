@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400px" height="32px" viewBox="0 0 400 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#159AFF" stop-opacity="0.402425699" offset="0%"></stop>
+            <stop stop-color="#088BFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="能源云系统V1.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.站控系统（站点）首页" transform="translate(-24.000000, -114.000000)" fill="url(#linearGradient-1)">
+            <g id="标题" transform="translate(24.000000, 114.000000)">
+                <polygon id="矩形" points="0 0 400 0 400 32 0 32"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

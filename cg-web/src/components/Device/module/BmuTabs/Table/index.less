@@ -1,0 +1,64 @@
+@import '~antd/es/style/themes/default.less';
+.card {
+  margin-bottom: 24px;
+  .title {
+    font-size: 16px;
+  }
+  .box {
+    position: relative;
+    display: inline-block;
+    width: 75px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    padding: 14px 0 10px;
+    text-align: center;
+    border: 1px solid #eaebf0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    .dot {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 18px;
+      height: 16px;
+      color: white;
+      line-height: 16px;
+      background: #86909c;
+      border-radius: 4px 0 4px 0;
+    } // &.temp {
+    //   .dot {
+    //     border-radius: 50%;
+    //   }
+    // }
+    &.max {
+      background: #ebf5ff;
+      border: 1px solid @primary-color;
+      .dot {
+        background: @primary-color;
+      }
+    }
+    &.min {
+      background: rgba(0, 180, 42, 0.1);
+      border: 1px solid #00b42a;
+      .dot {
+        background: #00b42a;
+      }
+    }
+  }
+}
+
+.legend {
+  .icon {
+    width: 8px;
+    height: 8px;
+    background: @primary-color;
+  }
+  .iconMin {
+    background: #00b42a;
+  }
+}
+
+.time {
+  white-space: nowrap;
+}

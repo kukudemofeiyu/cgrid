@@ -1,0 +1,47 @@
+.operationWrapper {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+}
+
+.ytTable {
+  :global {
+    .ant-pro-table-search {
+      padding: 0 !important;
+    }
+    .ant-table-header {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      overflow: hidden;
+      background: white;
+    }
+  }
+}
+
+.divider {
+  width: 1px;
+  height: 14px;
+  background: #eaebf0;
+}
+
+.row-dragging {
+  background: #fafafa;
+  border: 1px solid #ccc;
+}
+
+.row-dragging td {
+  padding: 16px;
+}
+
+.row-dragging .drag-visible {
+  visibility: visible;
+}
+
+.dragTitle {
+  width: 100%;
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

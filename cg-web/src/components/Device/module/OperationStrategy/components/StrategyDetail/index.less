@@ -1,0 +1,39 @@
+.card {
+  height: 100%;
+  :global {
+    .ant-card-body {
+      padding: 14px;
+    }
+  }
+}
+
+.cellRender {
+  padding: 2px;
+  overflow: hidden;
+  color: #007dff;
+  font-size: 12px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background: #c6e2ff;
+  border-left: 2px solid #007dff;
+  border-radius: 3px;
+}
+.listItem {
+  margin: 8px 0;
+  padding: 4px;
+  background: #f3f4f7;
+  border: 1px solid #007dff;
+  border-radius: 4px;
+  cursor: pointer;
+  .itemName {
+    color: #007dff;
+    text-align: end;
+  }
+}
+.calendar {
+  :global {
+    .ant-picker-calendar-date-content {
+      height: 56px !important;
+    }
+  }
+}

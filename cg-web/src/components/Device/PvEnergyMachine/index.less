@@ -1,0 +1,39 @@
+.overview {
+  position: relative;
+  display: inline-block;
+  width: 944px;
+  height: 431px;
+  text-align: left;
+  transform-origin: 0;
+  :global {
+    .ant-descriptions-item {
+      padding-bottom: 2px;
+    }
+  }
+  .node {
+    position: absolute;
+  }
+  .vertical {
+    :global {
+      .ant-descriptions-item-container {
+        flex-wrap: wrap;
+        .ant-descriptions-item-label {
+          width: 100%;
+        }
+      }
+    }
+  }
+  .flow {
+    position: absolute;
+    top: 45px;
+    left: 192px;
+  }
+}
+
+.run {
+  :global {
+    .ant-descriptions-item {
+      padding-bottom: 8px;
+    }
+  }
+}

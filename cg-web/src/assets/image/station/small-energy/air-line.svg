@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="190px" height="79px" viewBox="0 0 190 79" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <g id="光储充及工商储管理系统V1.5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="7_1_4.设备管理_设备列表_P0050A(小商储）_设备详情" transform="translate(-828.000000, -529.000000)">
+            <g id="main" transform="translate(212.000000, 102.000000)">
+                <g id="2" transform="translate(0.000000, 214.000000)">
+                    <g id="内容1" transform="translate(20.000000, 80.000000)">
+                        <g id="内容2" transform="translate(10.000000, 56.000000)">
+                            <g id="线_空调" transform="translate(587.000000, 77.676957)">
+                                <polyline id="路径-10" stroke="#303133" stroke-width="0.5" transform="translate(96.500000, 36.367696) scale(-1, 1) translate(-96.500000, -36.367696) " points="189 72.7353914 34 6.34272323e-13 4 2.43643527e-13"></polyline>
+                                <ellipse id="椭圆形备份" stroke="#FFFFFF" fill="#007DFF" cx="4" cy="72.7353914" rx="4.5" ry="4.52205072"></ellipse>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

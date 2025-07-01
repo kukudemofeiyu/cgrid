@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="352px" height="78px" viewBox="0 0 352 78" version="1.1" xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <linearGradient x1="50%" y1="25.278241%" x2="50%" y2="78.7090871%" id="linearGradient-title">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#D3F0FF" offset="66.9225306%"></stop>
+            <stop stop-color="#86CBFF" offset="100%"></stop>
+        </linearGradient>
+        <text id="text-2" font-family="YouSheBiaoTiHei" font-size="38" font-weight="normal" line-spacing="38"
+            letter-spacing="4">
+            <tspan x="0" y="38">永泰光储充示范站</tspan>
+        </text>
+        <filter x="-9.6%" y="-78.9%" width="119.2%" height="257.9%" filterUnits="objectBoundingBox" id="filter-title">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="10" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0.438488513   0 0 0 0 1  0 0 0 0.8 0" type="matrix"
+                in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="能源云系统V1.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1_1.站控系统（站点）首页全屏展示" transform="translate(-784.000000, 10.000000)" fill-rule="nonzero">
+            <g id="永泰光储充示范站" transform="translate(804.000000, 10.000000)">
+                <use fill="#D8D8D8" fill-opacity="1" filter="url(#filter-title)" xlink:href="#text-2"></use>
+                <use fill="url(#linearGradient-title)" xlink:href="#text-2"></use>
+                <use fill="#D8D8D8" fill-opacity="1" xlink:href="#text-2"></use>
+            </g>
+        </g>
+    </g>
+</svg>

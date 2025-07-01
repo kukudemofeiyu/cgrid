@@ -1,0 +1,146 @@
+@import '~antd/es/style/themes/default.less';
+.contain {
+  position: relative;
+  height: 100%;
+  padding-left: 0;
+  transition: 0.5s;
+  .tree {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 280px;
+    height: 100%;
+    padding: 20px;
+    overflow: auto;
+    background: white;
+    border-radius: 4px;
+    transform: translate3d(-280px, 0, 0);
+    transition: 0.5s;
+    :global {
+      .ant-tree-iconEle {
+        font-size: 16px;
+      }
+    }
+  }
+  .content {
+    height: 100%;
+    overflow: auto;
+    background: white;
+    :global {
+      .ant-descriptions-item {
+        padding-bottom: 8px;
+      }
+      .ant-divider-horizontal {
+        margin: 8px 0 !important;
+      }
+    }
+  }
+}
+
+.switchWrap {
+  position: absolute;
+  top: 50%;
+  left: 279px;
+  z-index: 20;
+  padding: 9px 0;
+  color: @primary-color;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  transform: translate3d(-280px, 0, 0);
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.open {
+  &.contain {
+    padding-left: 294px;
+    .tree {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  .switchWrap {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.tabs {
+  & > :global(.ant-tabs-nav) {
+    margin-right: 24px;
+    margin-left: 24px;
+    :global {
+      .ant-tabs-tab {
+        justify-content: center;
+        min-width: 98px;
+        padding: 10px 21px;
+        background: white;
+        border-radius: 0 !important;
+        & + .ant-tabs-tab {
+          margin-left: -1px !important;
+        }
+        &.ant-tabs-tab-active {
+          border-bottom-color: #f0f0f0;
+        }
+      }
+      .ant-tabs-tab-btn {
+        font-size: 16px;
+        line-height: 1;
+      }
+    }
+  }
+}
+
+.network {
+  position: absolute;
+  top: 4px;
+  left: 17px;
+}
+
+.detail {
+  :global {
+    .ant-descriptions {
+      overflow: hidden;
+      .ant-descriptions-view {
+        width: auto;
+        margin-right: -50px;
+        margin-left: -50px;
+        tr.ant-descriptions-row {
+          td.ant-descriptions-item {
+            padding-right: 50px;
+            padding-left: 50px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1680px) {
+  .detail {
+    :global {
+      .ant-descriptions {
+        .ant-descriptions-view {
+          margin-right: -12px;
+          margin-left: -12px;
+          tr.ant-descriptions-row {
+            td.ant-descriptions-item {
+              padding-right: 12px;
+              padding-left: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.logtabs {
+  :global {
+    .ant-tabs-nav {
+      margin-right: 24px;
+      margin-left: 24px;
+    }
+  }
+}

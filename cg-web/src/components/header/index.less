@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 12px;
+  color: #333;
+  background: white;
+  .menu {
+    width: 20px;
+    cursor: pointer;
+  }
+}
+
+.logo {
+  max-width: 100%;
+  height: unset !important;
+  max-height: 44px;
+}
+
+.site {
+  :global {
+    .ant-form-item-label label,
+    .ant-form-item-control-input-content {
+      color: #adb0b8;
+    }
+    .ant-select-selector {
+      color: #adb0b8;
+      background-color: #3a424f !important;
+      border: none !important;
+    }
+    .ant-select-arrow {
+      color: #adb0b8;
+      &:hover {
+        color: white;
+      }
+    }
+    .ant-select:hover {
+      .ant-select-selector {
+        color: white;
+      }
+      .ant-select-arrow {
+        color: white;
+      }
+    }
+  }
+}

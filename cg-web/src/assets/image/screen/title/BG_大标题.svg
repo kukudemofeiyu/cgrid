@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1920px" height="69px" viewBox="0 0 1920 69" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="-2.37443745%" id="linearGradient-1">
+            <stop stop-color="#111111" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#088BFF" stop-opacity="0.398191652" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="101.059573%" y1="219.441394%" x2="-0.308075065%" y2="219.441394%" id="linearGradient-2">
+            <stop stop-color="#7EC2FF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#088BFF" offset="52.2508741%"></stop>
+            <stop stop-color="#7EC2FF" stop-opacity="0" offset="100%"></stop>
+            <stop stop-color="#00AEEF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="100%" y1="219.441394%" x2="0%" y2="219.441394%" id="linearGradient-3">
+            <stop stop-color="#7EC2FF" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#35FFF4" offset="52.6510545%"></stop>
+            <stop stop-color="#7EC2FF" stop-opacity="0" offset="100%"></stop>
+            <stop stop-color="#00AEEF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="linearGradient-4">
+            <stop stop-color="#088BFF" stop-opacity="0.596099213" offset="0%"></stop>
+            <stop stop-color="#088BFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="100%" id="linearGradient-5">
+            <stop stop-color="#35FFF4" stop-opacity="0" offset="0%"></stop>
+            <stop stop-color="#088BFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="能源云系统V1.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="BG_大标题">
+            <rect id="矩形" fill="url(#linearGradient-1)" x="0" y="0" width="1920" height="68"></rect>
+            <g id="编组-33" transform="translate(240.648570, 43.249744)">
+                <polyline id="_路径_" stroke="url(#linearGradient-2)" stroke-width="3" points="1439.35143 0 966.479122 0 942.469891 24.0092308 496.232968 24.0092308 472.223737 0 3.99500274e-14 0"></polyline>
+                <line x1="794.264763" y1="24.0092308" x2="644.438096" y2="24.0092308" id="_路径_" stroke="url(#linearGradient-3)" stroke-width="3"></line>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" points="483.966814 23.4425641 465.380148 4.86461538 454.578609 4.86461538 473.165276 23.4425641"></polygon>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" opacity="0.5" points="462.285276 23.4425641 443.698609 4.86461538 432.888353 4.86461538 451.475019 23.4425641"></polygon>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" opacity="0.2" points="440.595019 23.4425641 422.008353 4.86461538 411.206814 4.86461538 429.793481 23.4425641"></polygon>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" points="954.151942 23.4425641 972.738609 4.86461538 983.540148 4.86461538 964.953481 23.4425641"></polygon>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" opacity="0.5" points="975.833481 23.4425641 994.420148 4.86461538 1005.2304 4.86461538 986.643737 23.4425641"></polygon>
+                <polygon id="路径" fill="#7EC2FF" fill-rule="nonzero" opacity="0.2" points="997.523737 23.4425641 1016.1104 4.86461538 1026.91194 4.86461538 1008.32528 23.4425641"></polygon>
+            </g>
+            <polygon id="_路径_2" fill="url(#linearGradient-4)" points="1177.70781 58 742.292194 58 689 0 1231 0"></polygon>
+            <g id="编组-20" transform="translate(413.759682, 25.500000)">
+                <line x1="259.740318" y1="2.5" x2="0" y2="2.5" id="路径-2" stroke="url(#linearGradient-5)"></line>
+                <rect id="矩形" fill="#7EC2FF" x="257.240318" y="0" width="5" height="5"></rect>
+            </g>
+            <g id="编组-19" transform="translate(1239.833333, 25.500000)">
+                <line x1="261.980637" y1="2.5" x2="2.24031849" y2="2.5" id="路径-2备份" stroke="url(#linearGradient-5)" transform="translate(132.240318, 2.500000) scale(-1, 1) translate(-132.240318, -2.500000) "></line>
+                <rect id="矩形" fill="#7EC2FF" x="0" y="0" width="5" height="5"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

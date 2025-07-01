@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="光储充及工商储管理系统V1.5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2_3_2.站点管理_站点列表_站点运行图" transform="translate(-824, -421)" fill-rule="nonzero">
+            <g id="main" transform="translate(212, 102)">
+                <g id="card缩略图2" transform="translate(440, 213)">
+                    <g id="5.DataDisplay数据展示/6.Tag标签/1.前置图标+文本/Medium/Brand/Dark-outline/Normal" transform="translate(164, 104)">
+                        <g id="icon_放大" transform="translate(8.3125, 3.5625)">
+                            <rect id="Rectangle-1007" stroke="#FFFFFF" stroke-width="1.875" x="4.6875" y="4.6875" width="10" height="7.5" rx="1.25"></rect>
+                            <path d="M1.5625,1.875 L4.6875,1.875 L4.6875,0 L1.5625,0 L1.5625,1.875 Z M1.875,4.6875 L1.875,1.5625 L0,1.5625 L0,4.6875 L1.875,4.6875 Z M1.5625,0 C0.69955,0 0,0.69955 0,1.5625 L1.875,1.5625 C1.875,1.7350875 1.7350875,1.875 1.5625,1.875 L1.5625,0 Z" id="Rectangle-1008" fill="#FFFFFF"></path>
+                            <path d="M1.5625,15 L4.6875,15 L4.6875,16.875 L1.5625,16.875 L1.5625,15 Z M1.875,12.1875 L1.875,15.3125 L0,15.3125 L0,12.1875 L1.875,12.1875 Z M1.5625,16.875 C0.69955,16.875 0,16.17545 0,15.3125 L1.875,15.3125 C1.875,15.1399125 1.7350875,15 1.5625,15 L1.5625,16.875 Z" id="Rectangle-1009" fill="#FFFFFF"></path>
+                            <path d="M17.8125,15 L14.6875,15 L14.6875,16.875 L17.8125,16.875 L17.8125,15 Z M17.5,12.1875 L17.5,15.3125 L19.375,15.3125 L19.375,12.1875 L17.5,12.1875 Z M17.8125,16.875 C18.67545,16.875 19.375,16.17545 19.375,15.3125 L17.5,15.3125 C17.5,15.1399125 17.6399125,15 17.8125,15 L17.8125,16.875 Z" id="Rectangle-1010" fill="#FFFFFF"></path>
+                            <path d="M17.8125,1.875 L14.6875,1.875 L14.6875,0 L17.8125,0 L17.8125,1.875 Z M17.5,4.6875 L17.5,1.5625 L19.375,1.5625 L19.375,4.6875 L17.5,4.6875 Z M17.8125,0 C18.67545,0 19.375,0.69955 19.375,1.5625 L17.5,1.5625 C17.5,1.7350875 17.6399125,1.875 17.8125,1.875 L17.8125,0 Z" id="Rectangle-1011" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

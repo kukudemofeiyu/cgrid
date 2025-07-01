@@ -1,0 +1,88 @@
+.container {
+  position: relative;
+  height: 100vh;
+  overflow: auto;
+  background-color: #ecf0ff;
+  /* stylelint-disable-next-line */
+  background-repeat: no-repeat;
+  background-position: bottom;
+  background-size: contain;
+}
+
+.lang {
+  width: 100%;
+  height: 40px;
+  color: white;
+  line-height: 44px;
+  text-align: right;
+  :global(.ant-dropdown-trigger) {
+    margin-right: 24px;
+  }
+}
+
+.content {
+  position: absolute;
+  top: 50%;
+  right: 170px;
+  width: 450px;
+  padding: 36px;
+  overflow: hidden;
+  background: white;
+  border-radius: 10px;
+  transform: translateY(-50%);
+  :global {
+    .ant-pro-form-login-header {
+      margin-bottom: 32px;
+    }
+  }
+  :global(.ant-pro-form-login-logo) {
+    width: 32px;
+    margin-right: 12px;
+  }
+  :global(.ant-pro-form-login-container) {
+    padding: 0;
+  }
+  :global(.ant-pro-form-login-title) {
+    top: 0;
+    font-size: 28px;
+  }
+  :global(.ant-pro-form-login-main) {
+    width: 100% !important;
+  }
+  :global(.ant-btn-primary) {
+    height: 48px;
+    background: linear-gradient(270deg, #165dff 0%, #0390ff 100%);
+    border-radius: 4px;
+  }
+  :global(.ant-input-affix-wrapper) {
+    height: 48px;
+    border-radius: 4px;
+  }
+  :global(.ant-form-item) {
+    margin-bottom: 32px;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 12px;
+  left: 0;
+  width: 100%;
+  color: white;
+  background: none !important;
+  :global(.ant-pro-global-footer-copyright) {
+    color: #cdddff;
+  }
+}
+
+.icon {
+  margin-left: 8px;
+  color: rgba(0, 0, 0, 0.2);
+  font-size: 24px;
+  vertical-align: middle;
+  cursor: pointer;
+  transition: color 0.3s;
+  &:hover {
+    color: @primary-color;
+  }
+}

@@ -1,0 +1,24 @@
+.title {
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.breadcrumb {
+  :global {
+    .ant-breadcrumb-link {
+      cursor: pointer;
+    }
+    .ant-breadcrumb-link,
+    .ant-breadcrumb-separator {
+      color: #333;
+    }
+    .ant-breadcrumb-link:hover,
+    li:last-child .ant-breadcrumb-link {
+      color: #9ca0a9;
+    }
+    li:last-child .ant-breadcrumb-link {
+      cursor: inherit;
+    }
+  }
+}

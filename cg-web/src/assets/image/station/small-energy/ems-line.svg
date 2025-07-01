@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="101px" height="10px" viewBox="0 0 101 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <g id="光储充及工商储管理系统V1.5" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="7_1_4.设备管理_设备列表_P0050A(小商储）_设备详情" transform="translate(-917.000000, -778.000000)">
+            <g id="main" transform="translate(212.000000, 102.000000)">
+                <g id="2" transform="translate(0.000000, 214.000000)">
+                    <g id="内容1" transform="translate(20.000000, 80.000000)">
+                        <g id="内容2" transform="translate(10.000000, 56.000000)">
+                            <g id="线_EMS" transform="translate(676.000000, 327.000000)">
+                                <line x1="100" y1="4.5" x2="4" y2="4.5" id="路径-10" stroke="#303133" stroke-width="0.5" transform="translate(52.000000, 4.500000) scale(-1, 1) translate(-52.000000, -4.500000) "></line>
+                                <circle id="椭圆形备份" stroke="#FFFFFF" fill="#007DFF" cx="4" cy="4" r="4.5"></circle>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,48 @@
+.dialog-product-logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 151px;
+  height: 100%;
+  /* stylelint-disable-next-line */
+  background-image: url(~@/assets/image/screen/equipment-bg.png);
+  background-size: 100% 100%;
+  .dialog-product-logo {
+    width: 90%;
+    height: 94%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
+
+.overview {
+  position: relative;
+  padding-left: 170px !important;
+  .productImg {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    text-align: center;
+    :global {
+      .ant-image-img {
+        width: auto !important;
+        max-width: 100%;
+        height: auto !important;
+        max-height: 100%;
+      }
+    }
+  }
+  .title {
+    margin-bottom: 16px;
+    color: #1d2129;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+.device_title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

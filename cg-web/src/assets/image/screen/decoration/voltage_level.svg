@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#FFFFFF" offset="0%"></stop>
+            <stop stop-color="#7EC2FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="能源云系统V1.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1.站控系统（站点）首页" transform="translate(-40.000000, -245.000000)" fill-rule="nonzero">
+            <g id="左边" transform="translate(24.000000, 114.000000)">
+                <g id="内容" transform="translate(16.000000, 56.000000)">
+                    <g id="编组3" transform="translate(0.000000, 73.000000)">
+                        <g id="电力" transform="translate(0.000000, 2.000000)">
+                            <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                            <path d="M8,1 C11.866,1 15,4.134 15,8 C15,11.866 11.866,15 8,15 C4.134,15 1,11.866 1,8 C1,4.134 4.134,1 8,1 L8,1 Z M8,1.73667187 C4.541,1.73667187 1.73667187,4.54134375 1.73667187,8 C1.73667187,11.459 4.541,14.2633438 8,14.2633438 C11.459,14.2633438 14.2633281,11.459 14.2633281,8 C14.2633281,4.541 11.459,1.73667187 8,1.73667187 Z M8,2.47367187 C11.052,2.47367187 13.5263281,4.948 13.5263281,8 C13.5263281,11.052 11.052,13.5263594 8,13.5263594 C4.948,13.5263594 2.47367187,11.0519844 2.47367187,8 C2.47367187,4.94801563 4.948,2.47367187 8,2.47367187 Z M10.3333281,4.33334375 L5.77067188,7.89 L7.33267188,8.32667188 L5.66667188,11.6666719 L10.2293281,8.11 L8.66767187,7.67334375 L10.3333281,4.33334375 L10.3333281,4.33334375 Z" id="形状" fill="url(#linearGradient-1)"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

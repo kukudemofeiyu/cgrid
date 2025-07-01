@@ -1,0 +1,5 @@
+# 基础镜像
+FROM busybox:stable
+
+# 复制html文件到路径
+ADD yt-ui.tar.gz /home/yt/projects/

@@ -1,0 +1,87 @@
+@import '~antd/es/style/themes/default.less';
+.layout {
+  :global {
+    .ant-layout {
+      background: #f9f9f9;
+    }
+    .ant-layout-header {
+      height: 56px !important;
+      box-shadow: 2px 0 8px 0 rgba(29, 35, 41, 0.05);
+    }
+    .ant-pro-sider.ant-layout-sider-collapsed .ant-pro-sider-logo {
+      padding: 16px 14px;
+    }
+  }
+}
+
+:global {
+  // 格式化进度条
+  .ant-pro-sider .ant-layout-sider-children {
+    ::-webkit-scrollbar {
+      width: 0 !important;
+      height: 0 !important;
+    }
+  }
+  .ant-layout-sider {
+    background: #1e222d;
+    .ant-pro-sider-logo {
+      height: 56px;
+      background: white;
+    }
+    .ant-menu-light {
+      background: white;
+    }
+  }
+  .ant-menu-dark .ant-menu-item,
+  .ant-menu-dark .ant-menu-item-group-title,
+  .ant-menu-dark .ant-menu-item>a,
+  .ant-menu-dark .ant-menu-item>span>a,
+  .ant-menu.ant-menu-dark,
+  .ant-menu-dark .ant-menu-sub,
+  .ant-menu.ant-menu-dark .ant-menu-sub,
+  .ant-menu-dark .ant-menu-item-active,
+  .ant-menu-dark .ant-menu-submenu-active,
+  .ant-menu-dark .ant-menu-submenu-open,
+  .ant-menu-dark .ant-menu-submenu-selected {
+    color: rgb(191, 203, 217);
+  }
+  .ant-menu-dark .ant-menu-submenu-selected {
+    color: #f4f4f5;
+  }
+  .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+    background: #10121a;
+  }
+  .ant-menu-dark .ant-menu-item-active,
+  .ant-menu-dark .ant-menu-submenu-active {
+    background: #262f3e !important;
+  }
+  .ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    color: white;
+    background: @primary-color !important;
+  }
+  .ant-pro-table-search {
+    margin-bottom: 0 !important;
+  }
+  .ant-menu-sub {
+    .ant-menu-item {
+      .ant-pro-menu-item {
+        &::before {
+          display: inline-block;
+          width: 8px;
+          height: 8px;
+          margin-right: 10px;
+          border: 2px solid;
+          border-radius: 50%;
+          content: '';
+        }
+      }
+      &.ant-menu-item-selected {
+        .ant-pro-menu-item {
+          &::before {
+            background: currentColor;
+          }
+        }
+      }
+    }
+  }
+}

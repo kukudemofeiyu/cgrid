@@ -1,0 +1,22 @@
+.hideTab {
+  :global {
+    .ant-tabs-nav {
+      display: none;
+    }
+  }
+}
+
+.formTab {
+  position: relative;
+  .btn {
+    position: absolute;
+    top: -55px;
+    right: 0;
+    z-index: 10;
+  }
+  :global {
+    .ant-tabs-content-holder {
+      position: relative;
+    }
+  }
+}

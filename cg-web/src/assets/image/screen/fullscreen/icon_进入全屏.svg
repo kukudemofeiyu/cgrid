@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    
+    <defs>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="fullscreen-filter-1">
+            <feGaussianBlur stdDeviation="0" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+        <radialGradient cx="50%" cy="100%" fx="50%" fy="100%" r="47.2493924%" id="fullscreen-radialGradient-2">
+            <stop stop-color="#4DD6F0" offset="0%"></stop>
+            <stop stop-color="#4DD6F0" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <radialGradient cx="50%" cy="0%" fx="50%" fy="0%" r="47.2493924%" id="fullscreen-radialGradient-3">
+            <stop stop-color="#4DD6F0" offset="0%"></stop>
+            <stop stop-color="#4DD6F0" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+        <path d="M32,16 C32,7.16571429 24.8342857,0 16,0 C7.16571429,0 0,7.16571429 0,16 C0,24.8342857 7.16571429,32 16,32 C24.8342857,32 32,24.8342857 32,16 Z" id="path-4"></path>
+        <filter x="-14.1%" y="-14.1%" width="128.1%" height="128.1%" filterUnits="objectBoundingBox" id="fullscreen-filter-5">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="1.5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.57254902   0 0 0 0 0.815686275   0 0 0 0 1  0 0 0 0.5 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <mask id="fullscreen-mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="32" height="32" fill="white">
+            <use xlink:href="#path-4"></use>
+        </mask>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="fullscreen-linearGradient-7">
+            <stop stop-color="#09E6FF" offset="0%"></stop>
+            <stop stop-color="#00C1FF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="能源云系统V1.0" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="1_1.站控系统（站点）首页全屏展示" transform="translate(-1789.000000, -9.000000)">
+            <g id="icon_进入全屏" transform="translate(1792.000000, 12.000000)">
+                <g id="btn_全屏1备份-7" fill="#00D9FF" opacity="0.296647141">
+                    <rect id="矩形" filter="url(#fullscreen-filter-1)" x="0" y="0" width="32" height="32" rx="16"></rect>
+                </g>
+                <g id="btn_全屏2">
+                    <g id="路径" stroke-dasharray="0,0">
+                        <use fill="black" fill-opacity="1" filter="url(#fullscreen-filter-5)" xlink:href="#path-4"></use>
+                        <use fill-opacity="0.5" fill="url(#fullscreen-radialGradient-2)" fill-rule="evenodd" xlink:href="#path-4"></use>
+                        <use stroke="#D1F0F6" mask="url(#fullscreen-mask-6)" stroke-width="2" fill-opacity="0.5" fill="url(#fullscreen-radialGradient-3)" fill-rule="evenodd" xlink:href="#path-4"></use>
+                    </g>
+                    <g id="pc-全屏" transform="translate(8.000000, 8.000000)" fill-rule="nonzero">
+                        <rect id="矩形" fill="#000000" opacity="0" x="0" y="0" width="16" height="16"></rect>
+                        <path d="M13.784,2.97828125 L11.064,5.69942187 C10.853126,5.89861565 10.5220494,5.89390319 10.3169303,5.68878826 C10.1118111,5.48367334 10.1070918,5.15259684 10.3062812,4.94171875 L13.0274219,2.22171875 L10.846875,2.22171875 C10.5508504,2.22171874 10.310875,1.98174337 10.310875,1.68571875 C10.310875,1.38969413 10.5508504,1.14971875 10.846875,1.14971875 L14.32,1.14971875 C14.616,1.14971875 14.856,1.38971875 14.856,1.68571875 L14.856,5.15884375 C14.856,5.45486838 14.6160246,5.69484375 14.32,5.69484375 C14.0239754,5.69484375 13.784,5.45486838 13.784,5.15884375 L13.784,2.97828125 L13.784,2.97828125 Z M12.8971406,13.0857188 L10.1657187,10.3542813 C10.0175572,10.2105623 9.9584216,9.99810974 10.0110213,9.79850951 C10.063621,9.59890928 10.2197787,9.44319188 10.4195266,9.39115592 C10.6192745,9.33911996 10.8315593,9.39885511 10.9748594,9.54742188 L13.7051406,12.2777188 L13.7051406,9.95084375 C13.7051406,9.63525185 13.9609784,9.37941406 14.2765703,9.37941406 C14.5921622,9.37941406 14.848,9.63525185 14.848,9.95084375 L14.848,13.6571406 C14.848,13.8086938 14.7878028,13.9540412 14.6806399,14.061207 C14.5734771,14.1683728 14.4281313,14.2285781 14.2765781,14.2285781 L10.5702812,14.2285781 C10.2546893,14.2285781 9.99885156,13.9727403 9.99885156,13.6571484 C9.99885156,13.3415565 10.2546893,13.0857188 10.5702812,13.0857188 L12.8971562,13.0857188 L12.8971406,13.0857188 Z M3.09370312,2.28571875 L5.85257812,5.04457812 C6.00095689,5.18808453 6.0604034,5.40046046 6.00808743,5.60014367 C5.95577146,5.79982688 5.79982688,5.95577146 5.60014367,6.00808743 C5.40046046,6.0604034 5.18808453,6.00095689 5.04457812,5.85257812 L2.28571875,3.09371875 L2.28571875,5.42057812 C2.28571875,5.73617003 2.02988096,5.99200781 1.71428906,5.99200781 C1.39869716,5.99200781 1.14285937,5.73617003 1.14285937,5.42057812 L1.14285937,1.71428125 C1.14285937,1.39869366 1.39869366,1.14285938 1.71428125,1.14285938 L5.42057812,1.14285938 C5.73617003,1.14285938 5.99200781,1.39869716 5.99200781,1.71428906 C5.99200781,2.02988096 5.73617003,2.28571875 5.42057812,2.28571875 L3.09370312,2.28571875 Z M2.28571875,12.0685781 L5.04457812,9.30971875 C5.26801614,9.08659571 5.6300254,9.08685105 5.85314844,9.31028906 C6.07627148,9.53372708 6.07601614,9.89573634 5.85257812,10.1188594 L3.09371875,12.8777187 L5.42057812,12.8777187 C5.73617003,12.8777187 5.99200781,13.1335565 5.99200781,13.4491484 C5.99200781,13.7647403 5.73617003,14.0205781 5.42057812,14.0205781 L1.71428125,14.0205781 C1.56272804,14.0205781 1.41738228,13.9603728 1.31021944,13.853207 C1.2030566,13.7460412 1.14285937,13.6006938 1.14285937,13.4491406 L1.14285937,9.74285937 C1.14285937,9.42726747 1.39869716,9.17142969 1.71428906,9.17142969 C2.02988096,9.17142969 2.28571875,9.42726747 2.28571875,9.74285937 L2.28571875,12.0697187 L2.28571875,12.0685781 Z" id="形状备份-19" fill="url(#fullscreen-linearGradient-7)"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
