@@ -1,4 +1,4 @@
-# 充电桩管理平台（完全开源！！！）
+# 充电桩运营平台（完全开源！！！）
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![java](https://img.shields.io/badge/Java-1.8%2B-blue)
@@ -26,9 +26,9 @@
 
 ### 系统特性
 - **多协议支持**：OCPP 1.6J/2.0.1 协议兼容
-- **多平台适配**：Web + 微信小程序 + Android/iOS APP
+- **多平台适配**：Web + 微信小程序 + Android/iOS APP(待开源)
 - **支付安全**：PCI DSS 合规支付处理
-- **高并发处理**：支持10,000+充电桩同时在线
+- **高并发处理**：单机支持100,000+充电桩同时在线
 - **智能调度**：基于负载均衡的充电桩分配策略
 
 ## 🛠 系统架构图
